@@ -3,7 +3,7 @@
 
 void mav_checksum(uint8_t val) {
   uint16_t tmp;
-  tmp = val ^ mw_mav.serial_checksum & 0xFF;
+  tmp = (val ^ mw_mav.serial_checksum) & 0xFF;
   tmp ^= (tmp << 4) & 0xFF;
   mw_mav.serial_checksum = (mw_mav.serial_checksum >> 8) ^ (tmp << 8) ^ (tmp << 3) ^ (tmp >> 4);
 }
@@ -48,7 +48,7 @@ void GPS_reset_home_position() {
 
 void mav_tx_checksum_func(int val) {
   long tmp;
-  tmp = val ^ mw_mav.tx_checksum & 0xFF;
+  tmp = (val ^ mw_mav.tx_checksum) & 0xFF;
   tmp ^= (tmp << 4) & 0xFF;
   mw_mav.tx_checksum = ( mw_mav.tx_checksum >> 8) ^ (tmp << 8) ^ (tmp << 3) ^ (tmp >> 4);
 }
@@ -345,6 +345,7 @@ void serialMAVreceive(uint8_t c)
   static uint8_t  mav_payload_index;
   static uint16_t mav_checksum_rcv;
   static uint8_t  mav_magic = 0;
+  uint8_t  mav_len=0;
 
   static enum _serial_state {
     MAV_IDLE,
@@ -419,7 +420,6 @@ void serialMAVreceive(uint8_t c)
   else if (mav_state == MAV_HEADER_COMP)
   {
     mw_mav.message_cmd = c;
-    uint8_t  mav_len;
     switch (c) {
       case MAVLINK_MSG_ID_HEARTBEAT:
         mav_magic = MAVLINK_MSG_ID_HEARTBEAT_MAGIC;

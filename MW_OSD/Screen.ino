@@ -680,7 +680,8 @@ if(MwSensorPresent&ACCELEROMETER)
 void displayVoltage(void)
 {
   uint8_t t_lead_icon;
-  if(voltage >= 0 && voltage < voltageMIN)
+//  if(voltage >= 0 && voltage < voltageMIN)
+  if(voltage < voltageMIN)
     voltageMIN = voltage;
 
   if (Settings[S_AUTOCELL]){
@@ -731,9 +732,12 @@ void displayCurrentThrottle(void)
     return;
 
 #ifndef NOTHROTTLESPACE
-#define THROTTLESPACE 1
+  #define THROTTLESPACE 1
 #else
-#define THROTTLESPACE 0
+  #ifdef THROTTLESPACE 
+    #undefine THROTTLESPACE
+  #endif
+  #define THROTTLESPACE 0
 #endif  
   screenBuffer[1]=' ';
 #ifdef AUTOTHROTTLE
@@ -1364,7 +1368,6 @@ void displayWindSpeed(void)
 {
   if(!fieldIsVisible(WIND_speedPosition))
     return;
-  uint16_t position=getPosition(WIND_speedPosition);
   int16_t d;
   #ifdef PROTOCOL_MAVLINK
     d = WIND_direction + 180;
@@ -2457,13 +2460,13 @@ void formatDistance(int32_t t_d2f, uint8_t t_units, uint8_t t_type, uint8_t t_ic
   // t_type 0=alt, 2=dist , 4=LD alt, 6=LD dist NOTE DO NOT SEND USING LD
   // t_units 0=none, 1 show units symbol at end
   // t_licon 0=none, other = hex char of lead icon
-  int32_t tmp;
   uint8_t xx=0;
   if (t_icon>1){
     xx=1;
     screenBuffer[0]=t_icon;
   }
 #ifdef LONG_RANGE_DISPLAY  
+  int32_t tmp;
   if (t_d2f>9999){
     if(Settings[S_UNITSYSTEM]){
       tmp = ((t_d2f) + (t_d2f%5280))/528;

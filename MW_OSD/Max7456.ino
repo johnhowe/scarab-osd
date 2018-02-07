@@ -149,7 +149,9 @@ void MAX7456SoftReset(void)
 void MAX7456Setup(void)
 {
   uint8_t MAX7456_reset=0x0C;
-  uint8_t MAX_screen_rows;
+ #ifdef BWBRIGHTNESS // change charactor black/white level brightess from default 
+   uint8_t MAX_screen_rows;
+ #endif
 
   MAX7456DISABLE
 
@@ -162,9 +164,9 @@ void MAX7456Setup(void)
 
   SPCR = (1<<SPE)|(1<<MSTR);
   SPSR = (1<<SPI2X);
-  uint8_t spi_junk;
-  spi_junk=SPSR;
-  spi_junk=SPDR;
+ // uint8_t spi_junk;
+ // spi_junk=SPSR;
+ // spi_junk=SPDR;
   delay(10);
 
 #ifdef MAX_SOFTRESET
@@ -201,11 +203,15 @@ void MAX7456Setup(void)
   if(flags.signaltype==1) {        // PAL
     MAX7456_reset = 0x4C;
     MAX_screen_size = 480;
-    MAX_screen_rows = 16;
+    #ifdef BWBRIGHTNESS // change charactor black/white level brightess from default 
+      MAX_screen_rows = 16;
+    #endif
   }
   else {                           // NTSC
     MAX_screen_size = 390;
-    MAX_screen_rows=13;
+    #ifdef BWBRIGHTNESS // change charactor black/white level brightess from default 
+      MAX_screen_rows=13;
+    #endif  
   }
 
   // Set up the Max chip. Enable display + set standard.

@@ -10,7 +10,7 @@
 uint8_t _pinMask = 0;         // Pin bitmask.
 volatile uint8_t *_pinOutput; // Output port register
 
-void NewTone(uint8_t pin, unsigned long frequency, unsigned long length) {
+void NewTone(uint8_t pin, unsigned long frequency) {
   uint8_t prescaler = _BV(CS10);                 // Try using prescaler 1 first.
   unsigned long top = F_CPU / frequency / 4 - 1; // Calculate the top.
   if (top > 65535) {                             // If not in the range for prescaler 1, use prescaler 256 (61 Hz and lower @ 16 MHz).
@@ -32,7 +32,7 @@ void NewTone(uint8_t pin, unsigned long frequency, unsigned long length) {
   TIMSK1 |= _BV(OCIE1A);             // Activate the timer interrupt.
 }
 
-void noNewTone(uint8_t pin) {
+void noNewTone() {
   TIMSK1 &= ~_BV(OCIE1A);   // Remove the timer interrupt.
   TCCR1B  = _BV(CS11);      // Default clock prescaler of 8.
   TCCR1A  = _BV(WGM10);     // Set to defaults so PWM can work like normal (PWM, phase corrected, 8bit).
@@ -49,7 +49,7 @@ void AudioVarioUpdate()
 {
 #ifdef AUDIOVARIOSWITCH
   if(!fieldIsVisible(MwClimbRatePosition)){
-    noNewTone(KKAUDIOVARIO);
+    noNewTone();
     return;
   }
 #endif //AUDIOVARIOSWITCH
@@ -84,11 +84,11 @@ void AudioVarioUpdate()
 
   if (t_maketone==1) 
   {
-    NewTone(KKAUDIOVARIO, toneFreq + 510, 0);  
+    NewTone(KKAUDIOVARIO, toneFreq + 510);  
   }
   else
   {
-    noNewTone(KKAUDIOVARIO);
+    noNewTone();
   }
 }
 
@@ -96,14 +96,14 @@ void AudioVarioUpdate()
 long getPressure()
 {
   long D1, D2, dT, P;
-  float TEMP;
+//  float TEMP;
   int64_t OFF, SENS;
  
   D1 = getData(0x48, 10);
   D2 = getData(0x50, 1);
 
   dT = D2 - ((long)calibrationData[5] << 8);
-  TEMP = (2000 + (((int64_t)dT * (int64_t)calibrationData[6]) >> 23)) / (float)100;
+//  TEMP = (2000 + (((int64_t)dT * (int64_t)calibrationData[6]) >> 23)) / (float)100;
   OFF = ((unsigned long)calibrationData[2] << 16) + (((int64_t)calibrationData[4] * dT) >> 7);
   SENS = ((unsigned long)calibrationData[1] << 15) + (((int64_t)calibrationData[3] * dT) >> 8);
   P = (((D1 * SENS) >> 21) - OFF) >> 15;
@@ -161,6 +161,6 @@ void twiSendCommand(byte address, byte command)
 //    Serial.println(command, HEX);
   }
 }
-#endif KKAUDIOVARIO
+#endif //KKAUDIOVARIO
 
 

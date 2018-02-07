@@ -79,7 +79,7 @@ uint16_t UntouchedStack(void)
 #define PGMSTR(p) (char *)pgm_read_word(p)
 
 //------------------------------------------------------------------------
-#define MWVERS "MW-OSD - R1.8.0.0"
+//#define MWVERS "MW-OSD - R1.8.0.0"
 #define MWVERS "MW-OSD - R1.8 BUILD 1"
 #define MWOSDVERSION 1880 // 1660=1.6.6.0 for GUI
 #define EEPROMVER 15      // for eeprom layout verification
@@ -517,9 +517,6 @@ void loop()
     ProcessSensors();       // using analogue sensors
 
 
-#ifndef INTRO_DELAY 
-  #define INTRO_DELAY 5
-#endif
     if( allSec < INTRO_DELAY ){
       displayIntro();
       timer.lastCallSign=onTime-CALLSIGNINTERVAL;
@@ -1176,7 +1173,7 @@ void ProcessSensors(void) {
 //-------------- Temperature
 #ifdef SHOW_TEMPERATURE
   #ifndef PROTOCOL_MAVLINK
-    temperature=sensorfilter[3][SENSORFILTERSIZE]>>3-TEMPZERO;
+    temperature=(sensorfilter[3][SENSORFILTERSIZE]>>3)-TEMPZERO;
     temperature = map (temperature, TEMPZERO, 1024, 0 , TEMPMAX);
   #endif  
 #endif
