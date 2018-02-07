@@ -15,19 +15,20 @@
 // Note: A6 is additionally used for power sensing
 
 #elif defined(FFPV_INNOVA)
+
+
 #ifdef RTC_SPILE
   #undef RTC_SPILE
+  #define RTC_SPILE 9
 #endif
 #ifdef RTC_SPICLK
   #undef RTC_SPICLK
+#define RTC_SPICLK  8
 #endif
 #ifdef RTC_SPIDATA
   #undef RTC_SPIDATA
-#endif
-
-#define RTC_SPILE    9
-#define RTC_SPICLK   8
 #define RTC_SPIDATA 10
+#endif
 
 #else
 #error Unknown VTX integrated board
