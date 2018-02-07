@@ -735,7 +735,7 @@ void displayCurrentThrottle(void)
   #define THROTTLESPACE 1
 #else
   #ifdef THROTTLESPACE 
-    #undefine THROTTLESPACE
+    #undef THROTTLESPACE
   #endif
   #define THROTTLESPACE 0
 #endif  
@@ -1915,9 +1915,12 @@ void displayConfigScreen(void)
 #ifdef MENU_PROFILE
   if(configPage==MENU_PROFILE){
 #ifdef CORRECTLOOPTIME
-#define MENU10MAX 2
+ #define MENU10MAX 2
 #else
-#define MENU10MAX 1
+ #ifdef MENU10MAX
+   #undef MENU10MAX
+ #endif
+ #define MENU10MAX 1
 #endif
     MenuBuffer[0]=FCProfile;
     MenuBuffer[1]=PIDController;
