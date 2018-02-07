@@ -15,6 +15,15 @@
 // Note: A6 is additionally used for power sensing
 
 #elif defined(FFPV_INNOVA)
+#ifdef RTC_SPILE
+  #undef RTC_SPILE
+#endif
+#ifdef RTC_SPICLK
+  #undef RTC_SPICLK
+#endif
+#ifdef RTC_SPIDATA
+  #undef RTC_SPIDATA
+#endif
 
 #define RTC_SPILE    9
 #define RTC_SPICLK   8
