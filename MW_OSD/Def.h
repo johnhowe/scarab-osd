@@ -316,6 +316,9 @@
 #endif
 
 #if defined FIXEDWING_BF
+  #if defined FIXEDWING
+    #undef FIXEDWING
+  #endif  
   #define FIXEDWING
   #define AMPERAGE_DIV 10
   #define CORRECT_MSP_BF1
@@ -336,6 +339,9 @@
 #endif
 
 #if defined FIXEDWING_BF_SERVO
+  #if defined FIXEDWING
+    #undef FIXEDWING
+  #endif  
   #define FIXEDWING
   #define AMPERAGE_DIV 10
   #define CORRECT_MSP_BF1
@@ -621,6 +627,7 @@
 
 #ifdef MENU_PID
   const uint8_t MENU_PID_tmp = MAXPAGE+1;
+  #undef  MENU_PID
   #define MENU_PID MENU_PID_tmp
   #undef  MAXPAGE
   #define MAXPAGE MENU_PID 
@@ -1044,7 +1051,7 @@ enum {
 #ifdef MULTIWII
   #ifdef INFO_CONTROLLER
    #undef INFO_CONTROLLER
-  #endif;  
+  #endif  
   #undef  INTRO_MENU
   #define INFO_CONTROLLER 1
 #endif
@@ -1057,13 +1064,13 @@ enum {
 #ifdef LIBREPILOT
   #ifdef INFO_CONTROLLER
    #undef INFO_CONTROLLER
-  #endif;  
+  #endif  
   #define INFO_CONTROLLER 3
 #endif
 #ifdef DRONIN
   #ifdef INFO_CONTROLLER
    #undef INFO_CONTROLLER
-  #endif;  
+  #endif  
   #define INFO_CONTROLLER 5
 #endif
 #ifdef CLEANFLIGHT

@@ -714,6 +714,11 @@ static uint8_t P8[PIDITEMS], I8[PIDITEMS], D8[PIDITEMS];
 
 static uint8_t rcRate8,rcExpo8;
 static uint8_t rollPitchRate;
+static uint16_t tpa_breakpoint16;
+static uint8_t rcYawExpo8;
+static uint8_t PIDController;
+static uint16_t LoopTime;
+
 static uint8_t rollRate;
 static uint8_t PitchRate;
 static uint8_t yawRate;
@@ -721,12 +726,9 @@ static uint8_t dynThrPID;
 static uint8_t thrMid8;
 static uint8_t thrExpo8;
 static uint16_t tpa_breakpoint16;
-static uint8_t rcYawExpo8;
 static uint8_t FCProfile;
 static uint8_t PreviousFCProfile;
 static uint8_t CurrentFCProfile;
-static uint8_t PIDController;
-static uint16_t LoopTime;
 
 int32_t  MwAltitude=0;                         // This hold barometric value
 int32_t  old_MwAltitude=0;                     // This hold barometric value
