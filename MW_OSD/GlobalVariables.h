@@ -710,32 +710,30 @@ PROGMEM const uint16_t SCREENLAYOUT_DEFAULT[POSITIONS_SETTINGS] = {
 (LINE05+2)|DISPLAY_NEVER|DISPLAY_DEV,     // DOPposition
 };
 
-static uint8_t P8[PIDITEMS], I8[PIDITEMS], D8[PIDITEMS];
+uint8_t P8[PIDITEMS], I8[PIDITEMS], D8[PIDITEMS];
 
-static uint8_t rcRate8,rcExpo8;
-static uint8_t rollPitchRate;
-static uint16_t tpa_breakpoint16;
-static uint8_t rcYawExpo8;
-static uint8_t PIDController;
-static uint16_t LoopTime;
-
-static uint8_t rollRate;
-static uint8_t PitchRate;
-static uint8_t yawRate;
-static uint8_t dynThrPID;
-static uint8_t thrMid8;
-static uint8_t thrExpo8;
-static uint16_t tpa_breakpoint16;
-static uint8_t FCProfile;
-static uint8_t PreviousFCProfile;
-static uint8_t CurrentFCProfile;
+uint8_t  rollRate;
+uint8_t  PitchRate;
+uint16_t tpa_breakpoint16;
+uint8_t  PIDController;
+uint16_t LoopTime;
+uint8_t  rcYawExpo8;
+uint8_t  PreviousFCProfile;
+uint8_t  rollPitchRate;
+uint8_t  rcRate8,rcExpo8;
+uint8_t  yawRate;
+uint8_t  dynThrPID;
+uint8_t  thrMid8;
+uint8_t  thrExpo8;
+uint8_t  FCProfile;
+uint8_t  CurrentFCProfile;
 
 int32_t  MwAltitude=0;                         // This hold barometric value
 int32_t  old_MwAltitude=0;                     // This hold barometric value
 
 
 int16_t MwAngle[2]={0,0};           // Those will hold Accelerometer Angle
-static uint16_t MwRcData[1+16]={   // This hold receiver pulse signal
+uint16_t MwRcData[1+16]={   // This hold receiver pulse signal
   1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500} ;
 
 
