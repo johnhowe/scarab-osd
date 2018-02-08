@@ -23,11 +23,11 @@
 #endif
 #ifdef RTC_SPICLK
   #undef RTC_SPICLK
-#define RTC_SPICLK  8
+  #define RTC_SPICLK  8
 #endif
 #ifdef RTC_SPIDATA
   #undef RTC_SPIDATA
-#define RTC_SPIDATA 10
+  #define RTC_SPIDATA 10
 #endif
 
 #else
@@ -146,7 +146,7 @@ void vtx_set_frequency(uint8_t band, uint8_t channel)
   uint32_t N = 0;
   uint16_t A = 0;
   uint32_t data;
-  uint8_t i = 0;
+//  uint8_t i = 0;
   if (frequency <5956 && frequency> 5644)
   {
     vtx_transfer(0, 1, 400);
