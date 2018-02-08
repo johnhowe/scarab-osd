@@ -258,9 +258,7 @@ void loop()
       break;  
   }
 #endif // TX_GUI_CONTROL   //PITCH,YAW,THROTTLE,ROLL order controlled by GUI   
-  #ifndef PROTOCOL_MSP
-    uint8_t MSPcmdsend=0;
-  #endif
+  
   alarms.active=0;
   timer.loopcount++;
   if (flags.reset){
@@ -381,6 +379,7 @@ void loop()
   if((currentMillis - previous_millis_high) >= hi_speed_cycle)  // 20 Hz or 100hz in MSP high mode
   {
     previous_millis_high = previous_millis_high+hi_speed_cycle;       
+      uint8_t MSPcmdsend=0;
       if(queuedMSPRequests == 0)
         queuedMSPRequests = modeMSPRequests;
       if (timer.GUI_active!=0){
@@ -546,9 +545,7 @@ void loop()
 #endif //HIDESUMMARY      
       if(configMode)
       {
-        #ifndef NOCONTROLLER
-          displayConfigScreen();
-        #endif
+        displayConfigScreen();
       }
 #ifdef CANVAS_SUPPORT
       else if (canvasMode)
