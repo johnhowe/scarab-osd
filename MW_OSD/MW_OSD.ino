@@ -79,8 +79,8 @@ uint16_t UntouchedStack(void)
 #define PGMSTR(p) (char *)pgm_read_word(p)
 
 //------------------------------------------------------------------------
-//#define MWVERS "MW-OSD - R1.8.0.0"
-#define MWVERS "MW-OSD - R1.8 BUILD 1"
+#define MWVERS "MW-OSD - R1.8 BUILD 2"
+
 #define MWOSDVERSION 1880 // 1660=1.6.6.0 for GUI
 #define EEPROMVER 15      // for eeprom layout verification
 
@@ -149,6 +149,9 @@ void setup()
 
   #ifndef STARTUPDELAY
     #define STARTUPDELAY 1000
+  #endif
+  #ifndef INTRO_DELAY 
+    #define INTRO_DELAY 5
   #endif
   delay(STARTUPDELAY);
 
@@ -384,10 +387,6 @@ void loop()
         queuedMSPRequests = modeMSPRequests;
       if (timer.GUI_active!=0){
         queuedMSPRequests&=REQ_MSP_FONT;
-#ifdef INTRO_FC
-        if (FC.verMajor==0)
-          queuedMSPRequests|=REQ_MSP_FC_VERSION;
-#endif
       } 
   
       uint32_t req = queuedMSPRequests & -queuedMSPRequests;
@@ -504,7 +503,9 @@ void loop()
          if (!canvasMode)
          #endif
          {
-           mspWriteRequest(MSPcmdsend, 0);
+           if (MSPcmdsend!=0){
+             mspWriteRequest(MSPcmdsend, 0);
+           }
          }
        #endif // KISS
       #endif //GPSOSD
@@ -515,7 +516,6 @@ void loop()
     }
 
     ProcessSensors();       // using analogue sensors
-
 
     if( allSec < INTRO_DELAY ){
       displayIntro();
@@ -937,9 +937,13 @@ void setMspRequests() {
       REQ_MSP_RC;
     if(mode.armed == 0)
       modeMSPRequests |=REQ_MSP_BOX;
+#ifdef INTRO_FC
+    if (FC.verMajor==0)
+      queuedMSPRequests|=REQ_MSP_FC_VERSION;
+#endif      
 #if defined MULTIWII_V24
     if(MwSensorActive&mode.gpsmission)
-    modeMSPRequests |= REQ_MSP_NAV_STATUS;
+      modeMSPRequests |= REQ_MSP_NAV_STATUS;
 #endif
   }     
   queuedMSPRequests &= modeMSPRequests;   // so we do not send requests that are not needed.
@@ -1353,15 +1357,12 @@ int16_t filter16u( int16_t filtered, int16_t raw, const byte k){
 
 #if defined USE_AIRSPEED_SENSOR
 void useairspeed(){
-  float airspeed_cal = AIRSPEED_CAL; //AIRSPEED_CAL; // move to GUI or config
-  uint16_t airspeedsensor = sensorfilter[3][SENSORFILTERSIZE]>>3;
-  if (airspeedsensor>(AIRSPEED_ZERO)){
-    airspeedsensor = airspeedsensor-AIRSPEED_ZERO;
-  }
-  else {
-    airspeedsensor = 0;
-  }
-  GPS_speed = 27.7777 * sqrt(airspeedsensor * airspeed_cal); // Need in cm/s for this
+  #define AIRDENSITY  1.225 // Density of air kg/m3
+  int16_t pressuresensor = (int16_t)(sensorfilter[AUXPIN][SENSORFILTERSIZE]>>3)-Settings16[S16_AIRSPEEDZERO];
+  pressuresensor=(pressuresensor*Settings16[S16_AIRSPEEDCAL])/500;
+  constrain(pressuresensor,-500,500);
+  int16_t Pa = map(pressuresensor,-500,500,-2000,2000); // Pressure - actual pascals
+  AIR_speed = (100 * sqrt(2*Pa))/AIRDENSITY;                   // Speed required in cm/s
 }
 #endif //USE_AIRSPEED_SENSOR 
 
