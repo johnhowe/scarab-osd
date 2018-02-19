@@ -6,7 +6,7 @@ char *ItoaPadded(int val, char *str, uint8_t bytes, uint8_t decimalpos)  {
   // Length
   // Decimal position
   uint8_t neg = 0;
-  if(val < 0) {
+  if(val < 0){ 
     neg = 1;
     val = -val;
   } 
@@ -1047,10 +1047,10 @@ void displayGPSdop(void)
 }
 
 
-void display_speed(uint16_t t_value, uint8_t t_position, uint8_t t_leadicon)
+void display_speed(int16_t t_value, uint8_t t_position, uint8_t t_leadicon)
 {
   if(!armed) t_value=0;
-  uint16_t xx;
+  int16_t xx;
   if(!Settings[S_UNITSYSTEM])
     xx = t_value * 0.036;           // From MWii cm/sec to Km/h
   else
@@ -1134,22 +1134,14 @@ void displayVario(void)
     return;
   uint16_t position = getPosition(MwVarioPosition);
 
-#ifdef VARIOORIIGINAL // requires different font table
-  for(int8_t X=-1; X<=1; X++) {
-    screen[position+(X*LINE)] =  SYM_VARIO;
-  }
-  int8_t xx=MwVario;
-  if (MwVario>120) xx=120;
-  if (MwVario<-120) xx=-120;
-  xx=map(xx,120,-120,0,17);
-  int8_t varline=(xx/6)-1;
-  int8_t varsymbol=xx%6;
-  screen[position+(varline*LINE)] = 0x8F-varsymbol;
-#elif defined VARIOENHANCED // multi char slider representation of climb rate
-  #define VARIOSCALE 120 // max 127 8 bit
+#ifndef VARIOSCALE
+  #define VARIOSCALE 200 
+#endif
+
+#if defined VARIOENHANCED // multi char slider representation of climb rate
   #define VARIOICONCOUNT 3
   #define VARIOROWS Settings[S_VARIO_SCALE]
-  int8_t t_vario=MwVario;
+  int16_t t_vario=MwVario;
   if (MwVario>VARIOSCALE) t_vario=VARIOSCALE;
   if (MwVario<-VARIOSCALE) t_vario=-VARIOSCALE;
   int8_t t_vario_rows = (int16_t)t_vario / (VARIOSCALE/VARIOROWS);
@@ -1163,10 +1155,10 @@ void displayVario(void)
   if (t_vario_icon!=0)
     screen[position-(LINE*t_vario_rows)] = SYM_VARIO+t_vario_icon;  // need -ve too  
 #elif defined VARIOSTANDARD // single char icon representation of climb rate
-  #define VARIOSCALE 120 // max 127 8 bit
+  #define VARIOSCALE VARIOSCALE // max 127 8 bit
   #define VARIOICONCOUNT 3
   #define VARIOROWS 1
-  int8_t t_vario=MwVario;
+  int16_t t_vario=MwVario;
   if (MwVario>VARIOSCALE) t_vario=VARIOSCALE;
   if (MwVario<-VARIOSCALE) t_vario=-VARIOSCALE;
   t_vario = t_vario/(VARIOSCALE/VARIOICONCOUNT);

@@ -36,8 +36,8 @@
 //#define CLEANFLIGHT               // Uncomment this if you are using latest CLEANFLIGHT version from repository (2.2.0 at time of this MWOSD release)
 //#define iNAV                      // Uncomment this if you are using latest iNAV version from repository (1.01 at time of this MWOSD release)
 //#define iNAV_KK                   // Uncomment this if you are using AEROMAX OSD and BARO sensor addition with iNAV with KK audio vario
-//#define APM                       // Uncomment this if you are using Ardupilot or APM MAVLINK 1.0 compatible FC
-//#define PX4                       // Uncomment this if you are using PX4 stack
+//#define APM                       // Uncomment this if you are using Ardupilot on APM / PIXHAWK / other supported hardware. Supports most MAVLINK 1.0 compatible FC
+//#define PX4                       // Uncomment this if you are using PX4 stack on PIXHAWK and other supported hardware
 //#define BASEFLIGHT                // Uncomment this if you are using latest BASEFLIGHT version from repository (Stable 2015.08.27 at time of this MWOSD release)
 //#define MULTIWII                  // Uncomment this if you are using latest 2.4 MULTIWII
 //#define MAHOWII                   // Uncomment this if you are using MAHOWII (https://github.com/mahowik/mahowii)
@@ -118,7 +118,7 @@
 #define GPSHOMEFIX         10       // Number of consecutive seconds of valid fixes before home will be set. Max 32 
 #define HOMESATFIX          6       // Minimum number of sats required when setting initial home location. 
 #define GPSOSDARMDISTANCE  20       // distance from home in meters when GPSOSD arms. Starts flight timer etc.
-#define GPSOSDHOMEDISTANCE 40       // distance from home in meters when GPSOSD is home. When speed is low it disarms and displays summary screen.
+//#define GPSOSDHOMEDISTANCE 40     // distance from home in meters when GPSOSD is home. When speed is low it disarms and displays summary screen.
 #define GPSOSDLANDED        8       // seconds OSD needs to have landed (within home distance and speed less than xxx) before triggering summary. Max 32
 #define GPSDOP 500                  // UBLOX only - minimum PDOP required for sat fix. A DOP of 2.00 is considered good 
 //#define PPM_CONTROL               // Enables full OSD menu, screen switching, RSSI, Throttle feature, virtual current sensor, etc using a PPM signal into OSD PWM input pin (RSSI pin on basic MINIM hardware). Requires TX type to be set below. 
@@ -139,8 +139,8 @@
 /********************       ALARM/STATUS settings      *********************/
 #define ALARM_VOLTAGE               // Text alerts if voltage below voltage alarm - in addition to flashing voltage indicator
 #define ALARM_SATS                  // Text alerts if sats below MINSATFIX - in addition to flashing sat indicator
-#define ALARM_GPS 5                 // Text alerts if no GPS data for more than x secs. Sets GPS sats to zero
-#define ALARM_MSP 3                 // Text alerts if no Flight controller data for more than x secs. 
+//#define ALARM_GPS 5               // Text alerts if no GPS data for more than x secs. Sets GPS sats to zero
+#define ALARM_MSP 5                 // Text alerts if no Flight controller data for more than x secs. 
 
 
 /********************       AIRCRAFT type=FIXEDWING settings      *********************/
@@ -191,9 +191,9 @@
 #define INTRO_MENU                  // Enable to display TX stick MENU 
 #define INTRO_CALLSIGN              // Enable to display callsign at startup
 #define INTRO_SIGNALTYPE            // Enable to display video type at startup
-#define INTRO_FC                    // Enable to display FC version at startup
+//#define INTRO_FC                  // Enable to display FC version at startup
 #define INTRO_DELAY 5               // Seconds intro screen should show for. Default is 5 
-//#define STARTUPDELAY 500          // Enable alternative startup delay (in ms) to allow MAX chip voltage to rise fully and initialise before configuring 
+//#define STARTUPDELAY 500          // Enable alternative startup delay (in ms) to allow MAX chip voltage to rise fully and initialise before configuring. Deafult = 1000 
 
 
 /********************       I2CGPS type settings      *********************/
@@ -257,6 +257,7 @@
 /********************       Visual Vario / climbrate Settings         ************************/
 //#define VARIOSTANDARD             // Enable this for single icon representation of vario. Less memory.
 #define VARIOENHANCED               // Enable this for multi line more accurate visual slider representation of vario. Configurable from GUI
+//#define VARIOSCALE 200            // Scale used for Vario - 200 =2.00 m/s. Multirotor defualt = 200, Plane = 300
 
 /********************       FC BARO Audio Vario / climbrate Settings         ************************/
 // A basic Audio Vario using vario data from FC 
@@ -294,13 +295,9 @@
 #define TX_CHAN_HIGH 1600           // Value for determining RC SWITCH MID / HIGH transition
 
 
-/********************       Airspeed Settings         ************************/
-// Completely UNTESTED for future integration of support for airspeed sensor connected direct to OSD
-// Uses temp pin
-// Overrides GPS speed
+/********************       Airspeed Sensor         ************************/
+// UNTESTED in flight. Uses MPXV700DP sensor connected to AUXPIN A6  (Aeromax OSD hardware only)
 //#define USE_AIRSPEED_SENSOR
-#define AIRSPEED_ZERO 512           // AIRSPEED ZERO calibration (0-1024) typically 512 for HK pilot sensor
-#define AIRSPEED_CAL  78.125        // Adjusting factor
 
 
 /********************       NAZA Settings         ************************/
