@@ -795,7 +795,7 @@ enum {
     #define USEGLIDESCOPE
   #endif
   #ifndef VARIOSCALE 
-    #define VARIOSCALE 300 
+    #define VARIOSCALE 500 
   #endif
 #endif
 
