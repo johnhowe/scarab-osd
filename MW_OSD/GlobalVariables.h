@@ -6,7 +6,7 @@
 #define DISPLAY_ALWAYS  0xC000
 #define DISPLAY_NEVER   0x0000
 #ifndef DISPLAY_DEV
-  #define DISPLAY_DEV     0x0000
+#define DISPLAY_DEV     0x0000
 #endif
 #define POS(pos, pal_off, disp)  (((pos)&POS_MASK)|((pal_off)<<PAL_SHFT)|(disp))
 #if defined SHIFTDOWN
@@ -22,7 +22,7 @@
 #define lo_speed_cycle  100
 #define sync_speed_cycle  33
 
-#define CALIBRATION_DELAY 10       // Calibration timeouts   
+#define CALIBRATION_DELAY 10       // Calibration timeouts
 #define EEPROM_WRITE_DELAY 5       // Calibration timeouts
 
 // DEFINE CONFIGURATION MENU PAGES
@@ -104,110 +104,110 @@ uint8_t vtxChannel;
 
 #ifdef VTX_REGION_UNRESTRICTED
 
-  #define VTX_DEFAULT_CHANNEL                 0
-  #define VTX_DEFAULT_BAND                    3
-  #define VTX_DEFAULT_POWER                   0
-  
-  #define VTX_BAND_COUNT                      5
-  #define VTX_CHANNEL_COUNT                   8
+#define VTX_DEFAULT_CHANNEL                 0
+#define VTX_DEFAULT_BAND                    3
+#define VTX_DEFAULT_POWER                   0
 
-  // XXX Kludge
-  // We take advantage of the co-inciddence that Innova's power selection is 25-200mW.
-  // So boring to do this {Hardwares} x {Regulatory woes} correctly.
+#define VTX_BAND_COUNT                      5
+#define VTX_CHANNEL_COUNT                   8
+
+// XXX Kludge
+// We take advantage of the co-inciddence that Innova's power selection is 25-200mW.
+// So boring to do this {Hardwares} x {Regulatory woes} correctly.
 
 # ifdef FFPV_INNOVA
 #   define VTX_POWER_COUNT                    2
 # else
 #   define VTX_POWER_COUNT                    3
 # endif
-  
-  const PROGMEM uint16_t vtx_frequencies[VTX_BAND_COUNT][VTX_CHANNEL_COUNT] = {
+
+const PROGMEM uint16_t vtx_frequencies[VTX_BAND_COUNT][VTX_CHANNEL_COUNT] = {
     { 5865, 5845, 5825, 5805, 5785, 5765, 5745, 5725 }, //A
     { 5733, 5752, 5771, 5790, 5809, 5828, 5847, 5866 }, //B
     { 5705, 5685, 5665, 5645, 5885, 5905, 5925, 5945 }, //E
     { 5740, 5760, 5780, 5800, 5820, 5840, 5860, 5880 }, //F
     { 5658, 5695, 5732, 5769, 5806, 5843, 5880, 5917 }  //R
-  };
-  
+};
+
 #elif defined(VTX_REGION_AUSTRALIA)
 
-  #define VTX_DEFAULT_CHANNEL                 0
-  #define VTX_DEFAULT_BAND                    2
-  #define VTX_DEFAULT_POWER                   0
-  
-  #define VTX_BAND_COUNT                      4
-  #define VTX_CHANNEL_COUNT                   8
+#define VTX_DEFAULT_CHANNEL                 0
+#define VTX_DEFAULT_BAND                    2
+#define VTX_DEFAULT_POWER                   0
 
-  // XXX Kludge Here, we again take advantage of the co-incidence that
-  // Helix and Innova has the same and only power selection for this region.
-  #define VTX_POWER_COUNT                     1
-  
-  const PROGMEM uint16_t vtx_frequencies[VTX_BAND_COUNT][VTX_CHANNEL_COUNT] = {
+#define VTX_BAND_COUNT                      4
+#define VTX_CHANNEL_COUNT                   8
+
+// XXX Kludge Here, we again take advantage of the co-incidence that
+// Helix and Innova has the same and only power selection for this region.
+#define VTX_POWER_COUNT                     1
+
+const PROGMEM uint16_t vtx_frequencies[VTX_BAND_COUNT][VTX_CHANNEL_COUNT] = {
     { 5865, 5845, 5825, 5805, 5785, 5765, 5745, 5725 }, //A
     { 5733, 5752, 5771, 5790, 5809, 5828, 5847, 5866 }, //B
     { 5740, 5760, 5780, 5800, 5820, 5840, 5860, 5860 }, //F
     { 5732, 5732, 5732, 5769, 5806, 5843, 5843, 5843 }  //R
-  };
+};
 #endif //VTX_REGION_XXXXX
 
 #endif // VTX_RTC6705
 
 /********************  RX channel rule definitions  *********************/
-#if defined TX_GUI_CONTROL   //PITCH,YAW,THROTTLE,ROLL order controlled by GUI    
-  uint8_t tx_roll;
-  uint8_t tx_pitch;
-  uint8_t tx_yaw;
-  uint8_t tx_throttle;
-  #define ROLLSTICK        tx_roll
-  #define PITCHSTICK       tx_pitch
-  #define YAWSTICK         tx_yaw
-  #define THROTTLESTICK    tx_throttle
-#elif defined TX_PYTR      //PITCH,YAW,THROTTLE,ROLL,AUX1,AUX2,AUX3,AUX4 //For Graupner/Spektrum    
-  #define ROLLSTICK        4
-  #define PITCHSTICK       1
-  #define YAWSTICK         2
-  #define THROTTLESTICK    3
+#if defined TX_GUI_CONTROL   //PITCH,YAW,THROTTLE,ROLL order controlled by GUI
+uint8_t tx_roll;
+uint8_t tx_pitch;
+uint8_t tx_yaw;
+uint8_t tx_throttle;
+#define ROLLSTICK        tx_roll
+#define PITCHSTICK       tx_pitch
+#define YAWSTICK         tx_yaw
+#define THROTTLESTICK    tx_throttle
+#elif defined TX_PYTR      //PITCH,YAW,THROTTLE,ROLL,AUX1,AUX2,AUX3,AUX4 //For Graupner/Spektrum
+#define ROLLSTICK        4
+#define PITCHSTICK       1
+#define YAWSTICK         2
+#define THROTTLESTICK    3
 #elif defined TX_RPTY      //ROLL,PITCH,THROTTLE,YAW,AUX1,AUX2,AUX3,AUX4 //For Robe/Hitec/Futaba
-  #define ROLLSTICK        1
-  #define PITCHSTICK       2
-  #define YAWSTICK         4
-  #define THROTTLESTICK    3
+#define ROLLSTICK        1
+#define PITCHSTICK       2
+#define YAWSTICK         4
+#define THROTTLESTICK    3
 #elif defined TX_RPYT      //ROLL,PITCH,YAW,THROTTLE,AUX1,AUX2,AUX3,AUX4 //For Multiplex
-  #define ROLLSTICK        1
-  #define PITCHSTICK       2
-  #define YAWSTICK         3
-  #define THROTTLESTICK    4
+#define ROLLSTICK        1
+#define PITCHSTICK       2
+#define YAWSTICK         3
+#define THROTTLESTICK    4
 #elif defined TX_PRTY      //PITCH,ROLL,THROTTLE,YAW,AUX1,AUX2,AUX3,AUX4 //For some Hitec/Sanwa/Others
-  #define ROLLSTICK        2
-  #define PITCHSTICK       1
-  #define YAWSTICK         4
-  #define THROTTLESTICK    3
+#define ROLLSTICK        2
+#define PITCHSTICK       1
+#define YAWSTICK         4
+#define THROTTLESTICK    3
 #elif defined TX_TRPY      //THROTTLE,ROLL,PITCH,YAW,AUX1,AUX2,AUX3,AUX4 //For some JR
-  #define ROLLSTICK        2
-  #define PITCHSTICK       3
-  #define YAWSTICK         4
-  #define THROTTLESTICK    1
+#define ROLLSTICK        2
+#define PITCHSTICK       3
+#define YAWSTICK         4
+#define THROTTLESTICK    1
 #elif defined KISS
-  #define ROLLSTICK        2
-  #define PITCHSTICK       3
-  #define YAWSTICK         4
-  #define THROTTLESTICK    1
+#define ROLLSTICK        2
+#define PITCHSTICK       3
+#define YAWSTICK         4
+#define THROTTLESTICK    1
 #elif defined PX4            //ROLL,PITCH,THROTTLE,YAW,AUX1,AUX2,AUX3,AUX4 //For PX4
-  #define ROLLSTICK        1
-  #define PITCHSTICK       2
-  #define YAWSTICK         4
-  #define THROTTLESTICK    3
+#define ROLLSTICK        1
+#define PITCHSTICK       2
+#define YAWSTICK         4
+#define THROTTLESTICK    3
 #elif defined APM            //ROLL,PITCH,THROTTLE,YAW,AUX1,AUX2,AUX3,AUX4 //For APM
-  #define ROLLSTICK        1
-  #define PITCHSTICK       2
-  #define YAWSTICK         4
-  #define THROTTLESTICK    3
+#define ROLLSTICK        1
+#define PITCHSTICK       2
+#define YAWSTICK         4
+#define THROTTLESTICK    3
 #else
-  // RX CHANEL IN MwRcData table
-  #define ROLLSTICK        1
-  #define PITCHSTICK       2
-  #define YAWSTICK         3
-  #define THROTTLESTICK    4
+// RX CHANEL IN MwRcData table
+#define ROLLSTICK        1
+#define PITCHSTICK       2
+#define YAWSTICK         3
+#define THROTTLESTICK    4
 #endif
 /*****************************************/
 
@@ -220,7 +220,7 @@ uint8_t vtxChannel;
 #if defined (ALARM_MSP)
 #define DATA_MSP ALARM_MSP
 #else
-#define DATA_MSP 5   
+#define DATA_MSP 5
 #endif
 
 #define NAZA_PWM_LOW  1000
@@ -231,10 +231,10 @@ char screen[480];          // Main screen ram for MAX7456
 #ifdef INVERTED_CHAR_SUPPORT
 uint8_t screenAttr[480/8]; // Attribute (INV) bits for each char in screen[]
 #endif
-char screenBuffer[20]; 
+char screenBuffer[20];
 uint32_t modeMSPRequests;
 uint32_t queuedMSPRequests;
-uint8_t sensorpinarray[]={VOLTAGEPIN,VIDVOLTAGEPIN,AMPERAGEPIN,AUXPIN,RSSIPIN};  
+uint8_t sensorpinarray[]= {VOLTAGEPIN,VIDVOLTAGEPIN,AMPERAGEPIN,AUXPIN,RSSIPIN};
 unsigned long previous_millis_low=0;
 unsigned long previous_millis_high =0;
 unsigned long previous_millis_sync =0;
@@ -254,44 +254,44 @@ int ddsAcc;
 
 //General use variables
 struct  __timer {
-  uint8_t  tenthSec;
-  uint8_t  halfSec;
-  uint8_t  Blink2hz;                          // This is turing on and off at 2hz
-  uint8_t  Blink10hz;                         // This is turing on and off at 10hz
-  uint16_t lastCallSign;                      // Callsign_timer
-  uint8_t  rssiTimer;
-//  uint8_t accCalibrationTimer;
-  uint8_t  magCalibrationTimer;
-  uint32_t fwAltitudeTimer;
-  uint32_t seconds;
-  uint8_t  MSP_active;
-  uint8_t  GPS_active;
-  uint8_t  GUI_active=5;
-  uint8_t  GPS_initdelay;
-  uint16_t  loopcount;
-  uint16_t  packetcount;
-  uint16_t  serialrxrate;
-  uint32_t alarms;                            // Alarm length timer
-  uint32_t vario;                             
-  uint32_t audiolooptimer;
-  uint32_t GPSOSDstate;
-  uint8_t  disarmed;                             
-  uint8_t  MAVstatustext;                             
+    uint8_t  tenthSec;
+    uint8_t  halfSec;
+    uint8_t  Blink2hz;                          // This is turing on and off at 2hz
+    uint8_t  Blink10hz;                         // This is turing on and off at 10hz
+    uint16_t lastCallSign;                      // Callsign_timer
+    uint8_t  rssiTimer;
+    //  uint8_t accCalibrationTimer;
+    uint8_t  magCalibrationTimer;
+    uint32_t fwAltitudeTimer;
+    uint32_t seconds;
+    uint8_t  MSP_active;
+    uint8_t  GPS_active;
+    uint8_t  GUI_active=5;
+    uint8_t  GPS_initdelay;
+    uint16_t  loopcount;
+    uint16_t  packetcount;
+    uint16_t  serialrxrate;
+    uint32_t alarms;                            // Alarm length timer
+    uint32_t vario;
+    uint32_t audiolooptimer;
+    uint32_t GPSOSDstate;
+    uint8_t  disarmed;
+    uint8_t  MAVstatustext;
 
 }
 timer;
 
 struct __flags {
-  uint8_t box;
-  uint8_t reset;
-  uint8_t signaltype;
-  uint8_t signalauto;
-  uint8_t vario;  
+    uint8_t box;
+    uint8_t reset;
+    uint8_t signaltype;
+    uint8_t signalauto;
+    uint8_t vario;
 }
 flags;
 
 struct __display {
-  uint32_t distance;
+    uint32_t distance;
 }
 display;
 
@@ -311,41 +311,41 @@ struct __cfg {
 cfg;
 
 struct __cfgpa {
-  uint16_t rollPitchItermIgnoreRate;
-  uint16_t yawItermIgnoreRate;
-  uint16_t yaw_p_limit;
-  uint8_t  t0;
-  uint8_t  vbatPidCompensation;
-  uint8_t  ptermSRateWeight;
-  uint8_t  dtermSetpointWeight;
-  uint8_t  t1;
-  uint8_t  t2;
-  uint8_t  itermThrottleGain;
-  uint16_t rateAccelLimit;
-  uint16_t yawRateAccelLimit;
+    uint16_t rollPitchItermIgnoreRate;
+    uint16_t yawItermIgnoreRate;
+    uint16_t yaw_p_limit;
+    uint8_t  t0;
+    uint8_t  vbatPidCompensation;
+    uint8_t  ptermSRateWeight;
+    uint8_t  dtermSetpointWeight;
+    uint8_t  t1;
+    uint8_t  t2;
+    uint8_t  itermThrottleGain;
+    uint16_t rateAccelLimit;
+    uint16_t yawRateAccelLimit;
 }
 cfgpa;
 
 struct __FC {
-uint8_t    verMajor;
-uint8_t    verMinor;
-uint8_t    verPatch;  
+    uint8_t    verMajor;
+    uint8_t    verMinor;
+    uint8_t    verPatch;
 }
 FC;
 
-#ifdef MENU_SERVO  
+#ifdef MENU_SERVO
 #define MAX_SERVOS 8
 struct __servo {
     uint16_t settings[5][MAX_SERVOS];
 }
 servo;
-#endif //MENU_SERVO  
+#endif //MENU_SERVO
 
 
 /********************       Development/ test parameters      *********************/
 uint16_t debug[4];
-#ifdef DEBUGDPOSMSPID    
-  uint8_t boxidarray[50];
+#ifdef DEBUGDPOSMSPID
+uint8_t boxidarray[50];
 #endif
 
 int8_t menudir;
@@ -354,7 +354,7 @@ unsigned int menuSec=0;
 uint8_t armedtimer=30;
 uint16_t debugerror;
 uint16_t debugval=0;
-uint16_t cell_data[6]={0,0,0,0,0,0};
+uint16_t cell_data[6]= {0,0,0,0,0,0};
 uint16_t cycleTime;
 uint16_t I2CError;
 uint8_t oldROW=0;
@@ -367,7 +367,7 @@ uint8_t MSP_home_set=0;
 uint8_t variopitch=0;
 uint8_t MAVstatuslength;
 #if defined CORRECT_MSP_BF1
-  uint8_t bfconfig[25];
+uint8_t bfconfig[25];
 #endif
 
 // Canvas mode
@@ -401,100 +401,100 @@ uint16_t serialrxrate = 0;
 
 // Mode bits
 struct __mode {
-  uint32_t armed;
-  uint32_t stable;
-  uint32_t horizon;
-  uint32_t baro;
-  uint32_t mag;
-  uint32_t camstab;
-  uint32_t gpshome;
-  uint32_t gpshold;
-  uint32_t passthru;
-  uint32_t failsafe;
-  uint32_t air;
-  uint32_t acroplus;
-  uint32_t osd_switch;
-  uint32_t llights;
-  uint32_t gpsmission;
-  uint32_t gpsland;
-}mode;
+    uint32_t armed;
+    uint32_t stable;
+    uint32_t horizon;
+    uint32_t baro;
+    uint32_t mag;
+    uint32_t camstab;
+    uint32_t gpshome;
+    uint32_t gpshold;
+    uint32_t passthru;
+    uint32_t failsafe;
+    uint32_t air;
+    uint32_t acroplus;
+    uint32_t osd_switch;
+    uint32_t llights;
+    uint32_t gpsmission;
+    uint32_t gpsland;
+} mode;
 
 // Settings Locations
 enum Setting16_ {
-  S16_AMPZERO,
-  S16_AMPDIVIDERRATIO,
-  S16_RSSIMIN,
-  S16_RSSIMAX,
-  S16_AIRSPEEDZERO,
-  S16_AIRSPEEDCAL,
-  
-  // EEPROM16_SETTINGS must be last!
-  EEPROM16_SETTINGS
+    S16_AMPZERO,
+    S16_AMPDIVIDERRATIO,
+    S16_RSSIMIN,
+    S16_RSSIMAX,
+    S16_AIRSPEEDZERO,
+    S16_AIRSPEEDCAL,
+
+    // EEPROM16_SETTINGS must be last!
+    EEPROM16_SETTINGS
 };
 
 // Settings Locations
 enum Setting_ {
-  S_CHECK_,
-S_AUTOCELL,
-  S_VIDVOLTAGEMIN,
-  S_RSSI_ALARM,
-S_AUTOCELL_ALARM,
-  S_MWRSSI,
-S_RSSI_CH,
-S_TX_TYPE,
-  S_VOLTAGEMIN,
-  S_BATCELLS,
-  S_DIVIDERRATIO,
-  S_MAINVOLTAGE_VBAT,
-S_SIDEBARHEIGHT,
-  S_MWAMPERAGE,
-S_TX_CH_REVERSE,
-S_MAV_SYS_ID,
-  S_ALARMS_TEXT,
-S_CALLSIGN_ALWAYS,
-  S_VIDDIVIDERRATIO,
-  S_THROTTLE_PWM,
-  S_AMPER_HOUR_ALARM,
-  S_AMPERAGE_ALARM,
-S_VARIO_SCALE,
-  S_GPS_MASK,
-S_USEGPSHEADING,
-  S_UNITSYSTEM,
-  S_VIDEOSIGNALTYPE,
-  S_SHOWBATLEVELEVOLUTION,
-  S_RESETSTATISTICS,
-  S_MAPMODE,
-  S_VREFERENCE,
-S_SIDEBARWIDTH,
-  S_GPSTIME,
-  S_GPSTZAHEAD,
-  S_GPSTZ,
-  S_VTX_POWER,
-  S_VTX_BAND,
-  S_VTX_CHANNEL,
-  S_RCWSWITCH,
-  S_RCWSWITCH_CH,
-  S_DISTANCE_ALARM,
-  S_ALTITUDE_ALARM,
-  S_SPEED_ALARM,
-  S_FLYTIME_ALARM,
-  S_AUDVARIO_DEADBAND,
-  S_AUDVARIO_TH_CUT,
-  S_CS0,
-  S_CS1,
-  S_CS2,
-  S_CS3,
-  S_CS4,
-  S_CS5,
-  S_CS6,
-  S_CS7,
-  S_CS8,
-  S_CS9,
-S_PWM_PPM,
-S_ELEVATIONS,
+    S_CHECK_,
+    S_AUTOCELL,
+    S_VIDVOLTAGEMIN,
+    S_RSSI_ALARM,
+    S_AUTOCELL_ALARM,
+    S_MWRSSI,
+    S_RSSI_CH,
+    S_TX_TYPE,
+    S_VOLTAGEMIN,
+    S_BATCELLS,
+    S_DIVIDERRATIO,
+    S_MAINVOLTAGE_VBAT,
+    S_SIDEBARHEIGHT,
+    S_MWAMPERAGE,
+    S_TX_CH_REVERSE,
+    S_MAV_SYS_ID,
+    S_ALARMS_TEXT,
+    S_CALLSIGN_ALWAYS,
+    S_VIDDIVIDERRATIO,
+    S_THROTTLE_PWM,
+    S_AMPER_HOUR_ALARM,
+    S_AMPERAGE_ALARM,
+    S_VARIO_SCALE,
+    S_GPS_MASK,
+    S_USEGPSHEADING,
+    S_UNITSYSTEM,
+    S_VIDEOSIGNALTYPE,
+    S_SHOWBATLEVELEVOLUTION,
+    S_RESETSTATISTICS,
+    S_MAPMODE,
+    S_VREFERENCE,
+    S_SIDEBARWIDTH,
+    S_GPSTIME,
+    S_GPSTZAHEAD,
+    S_GPSTZ,
+    S_VTX_POWER,
+    S_VTX_BAND,
+    S_VTX_CHANNEL,
+    S_RCWSWITCH,
+    S_RCWSWITCH_CH,
+    S_DISTANCE_ALARM,
+    S_ALTITUDE_ALARM,
+    S_SPEED_ALARM,
+    S_FLYTIME_ALARM,
+    S_AUDVARIO_DEADBAND,
+    S_AUDVARIO_TH_CUT,
+    S_CS0,
+    S_CS1,
+    S_CS2,
+    S_CS3,
+    S_CS4,
+    S_CS5,
+    S_CS6,
+    S_CS7,
+    S_CS8,
+    S_CS9,
+    S_PWM_PPM,
+    S_ELEVATIONS,
 
-  // EEPROM_SETTINGS must be last!
-  EEPROM_SETTINGS
+    // EEPROM_SETTINGS must be last!
+    EEPROM_SETTINGS
 };
 
 
@@ -504,225 +504,225 @@ uint16_t Settings16[EEPROM16_SETTINGS];
 //const uint8_t screenlayoutoffset=((EEPROM_SETTINGS-EEPROM16_SETTINGS_START)>>2);
 
 #ifdef PROTOCOL_MAVLINK
-  #define DEF_S_MAINVOLTAGE_VBAT 1 // 1
-  #define DEF_S_TX_TYPE 1        // 1
-  #define DEF_S_MWRSSI 2         // 1
-  #define DEF_S_MWAMPERAGE 1     // 1
-  #define DEF_S_TX_TYPE 1        // 1
-  #define DEF_S_RCWSWITCH 1      // S_RCWSWITCH,
-  #define DEF_S_RCWSWITCH_CH 8   // S_RCWSWITCH_CH,
+#define DEF_S_MAINVOLTAGE_VBAT 1 // 1
+#define DEF_S_TX_TYPE 1        // 1
+#define DEF_S_MWRSSI 2         // 1
+#define DEF_S_MWAMPERAGE 1     // 1
+#define DEF_S_TX_TYPE 1        // 1
+#define DEF_S_RCWSWITCH 1      // S_RCWSWITCH,
+#define DEF_S_RCWSWITCH_CH 8   // S_RCWSWITCH_CH,
 #else
-  #define DEF_S_MAINVOLTAGE_VBAT 0
-  #define DEF_S_TX_TYPE 0
-  #define DEF_S_MWRSSI 0
-  #define DEF_S_MWAMPERAGE 0
-  #define DEF_S_TX_TYPE 0
-  #define DEF_S_RCWSWITCH 0
-  #define DEF_S_RCWSWITCH_CH 8
+#define DEF_S_MAINVOLTAGE_VBAT 0
+#define DEF_S_TX_TYPE 0
+#define DEF_S_MWRSSI 0
+#define DEF_S_MWAMPERAGE 0
+#define DEF_S_TX_TYPE 0
+#define DEF_S_RCWSWITCH 0
+#define DEF_S_RCWSWITCH_CH 8
 #endif
 
 // For Settings Defaults
 PROGMEM const uint8_t EEPROM_DEFAULT[EEPROM_SETTINGS] = {
-EEPROMVER, //   S_CHECK_,    
-1, // S_AUTOCELL
-0, //   S_VIDVOLTAGEMIN,
-0, //   S_RSSI_ALARM,
-34, // S_AUTOCELL_ALARM
-DEF_S_MWRSSI, //   S_MWRSSI,
-8, //   S_RSSI_CH,
-DEF_S_TX_TYPE, // S_TX_TYPE
-0, //   S_VOLTAGEMIN,
-4, //   S_BATCELLS,
-200, //   S_DIVIDERRATIO,
-DEF_S_MAINVOLTAGE_VBAT, //   S_MAINVOLTAGE_VBAT,
-3, //   S_SIDEBARHEIGHT,
-DEF_S_MWAMPERAGE, //   S_MWAMPERAGE,
-0, // S_TX_CH_REVERSE
-1, //   S_MAV_SYS_ID,   //MAVLINK SYS id
-1, //   S_ALARMS_TEXT,
-1, // S_CALLSIGN_ALWAYS
-200, //   S_VIDDIVIDERRATIO,
-0, //   S_THROTTLE_PWM,
-50, //   S_AMPER_HOUR_ALARM,
-100, //   S_AMPERAGE_ALARM,
-2, // S_VARIO_SCALE
-0, // S_GPS_MASK
-2, //   S_USEGPSHEADING, // fixedwing only
-0, //   S_UNITSYSTEM,
-2, //   S_VIDEOSIGNALTYPE,
-1, //   S_SHOWBATLEVELEVOLUTION,
-0, //   S_RESETSTATISTICS,
-1, //   S_MAPMODE,
-0, //   S_VREFERENCE,
-7, //   S_SIDEBARWIDTH,
-0, //   S_GPSTIME,
-0, //   S_GPSTZAHEAD,
-0, //   S_GPSTZ,
+    EEPROMVER, //   S_CHECK_,
+    1, // S_AUTOCELL
+    0, //   S_VIDVOLTAGEMIN,
+    0, //   S_RSSI_ALARM,
+    34, // S_AUTOCELL_ALARM
+    DEF_S_MWRSSI, //   S_MWRSSI,
+    8, //   S_RSSI_CH,
+    DEF_S_TX_TYPE, // S_TX_TYPE
+    0, //   S_VOLTAGEMIN,
+    4, //   S_BATCELLS,
+    200, //   S_DIVIDERRATIO,
+    DEF_S_MAINVOLTAGE_VBAT, //   S_MAINVOLTAGE_VBAT,
+    3, //   S_SIDEBARHEIGHT,
+    DEF_S_MWAMPERAGE, //   S_MWAMPERAGE,
+    0, // S_TX_CH_REVERSE
+    1, //   S_MAV_SYS_ID,   //MAVLINK SYS id
+    1, //   S_ALARMS_TEXT,
+    1, // S_CALLSIGN_ALWAYS
+    200, //   S_VIDDIVIDERRATIO,
+    0, //   S_THROTTLE_PWM,
+    50, //   S_AMPER_HOUR_ALARM,
+    100, //   S_AMPERAGE_ALARM,
+    2, // S_VARIO_SCALE
+    0, // S_GPS_MASK
+    2, //   S_USEGPSHEADING, // fixedwing only
+    0, //   S_UNITSYSTEM,
+    2, //   S_VIDEOSIGNALTYPE,
+    1, //   S_SHOWBATLEVELEVOLUTION,
+    0, //   S_RESETSTATISTICS,
+    1, //   S_MAPMODE,
+    0, //   S_VREFERENCE,
+    7, //   S_SIDEBARWIDTH,
+    0, //   S_GPSTIME,
+    0, //   S_GPSTZAHEAD,
+    0, //   S_GPSTZ,
 #ifdef VTX_RTC6705
-VTX_DEFAULT_POWER,    // S_VTX_POWER
-VTX_DEFAULT_BAND,     // S_VTX_BAND
-VTX_DEFAULT_CHANNEL,  // S_VTX_CHANNEL
+    VTX_DEFAULT_POWER,    // S_VTX_POWER
+    VTX_DEFAULT_BAND,     // S_VTX_BAND
+    VTX_DEFAULT_CHANNEL,  // S_VTX_CHANNEL
 #else
-0,   // S_VTX_POWER
-0,   // S_VTX_BAND
-0,   // S_VTX_CHANNEL
+    0,   // S_VTX_POWER
+    0,   // S_VTX_BAND
+    0,   // S_VTX_CHANNEL
 #endif
-DEF_S_RCWSWITCH,   // S_RCWSWITCH,
-8,   // S_RCWSWITCH_CH,
-0,   // S_DISTANCE_ALARM,
-0,   // S_ALTITUDE_ALARM,
-0,   // S_SPEED_ALARM,
-30,  // S_FLYTIME_ALARM
-30,  // S_AUDVARIO_DEADBAND
-20,  // S_AUDVARIO_TH_CUT
+    DEF_S_RCWSWITCH,   // S_RCWSWITCH,
+    8,   // S_RCWSWITCH_CH,
+    0,   // S_DISTANCE_ALARM,
+    0,   // S_ALTITUDE_ALARM,
+    0,   // S_SPEED_ALARM,
+    30,  // S_FLYTIME_ALARM
+    30,  // S_AUDVARIO_DEADBAND
+    20,  // S_AUDVARIO_TH_CUT
 
-0x4D,   // S_CS0,
-0x57,   // S_CS1,
-0x4F,   // S_CS2,
-0x53,   // S_CS3,
-0x44,   // S_CS4,
-0x00,   // S_CS5,
-0x20,   // S_CS6,
-0x20,   // S_CS7,
-0x20,   // S_CS8,
-0x20,   // S_CS9,
-0,      // S_PWM_PPM,
-0,      // S_ELEVATIONS,
+    0x4D,   // S_CS0,
+    0x57,   // S_CS1,
+    0x4F,   // S_CS2,
+    0x53,   // S_CS3,
+    0x44,   // S_CS4,
+    0x00,   // S_CS5,
+    0x20,   // S_CS6,
+    0x20,   // S_CS7,
+    0x20,   // S_CS8,
+    0x20,   // S_CS9,
+    0,      // S_PWM_PPM,
+    0,      // S_ELEVATIONS,
 
 };
 
 PROGMEM const uint16_t EEPROM16_DEFAULT[EEPROM16_SETTINGS] = {
-  0,// S16_AMPZERO,
-  150,// S16_AMPDIVIDERRATIO,
-  0,// S16_RSSIMIN,
-  1023,// S16_RSSIMAX,
-  512,// S16_AIRSPEEDZERO,
-  500,// S16_AIRSPEEDCAL,
-  
+    0,// S16_AMPZERO,
+    150,// S16_AMPDIVIDERRATIO,
+    0,// S16_RSSIMIN,
+    1023,// S16_RSSIMAX,
+    512,// S16_AIRSPEEDZERO,
+    500,// S16_AIRSPEEDCAL,
+
 };
 
 enum Positions {
-  GPS_numSatPosition,
-  GPS_directionToHomePosition,
-  GPS_distanceToHomePosition,
-  GPS_speedPosition,
-  GPS_angleToHomePosition,
-  MwGPSAltPosition,
-  sensorPosition,
-  MwHeadingPosition,
-  MwHeadingGraphPosition,
-  MwAltitudePosition,
-  MwVarioPosition,
-  CurrentThrottlePosition,
-  flyTimePosition,
-  onTimePosition,
-  motorArmedPosition,
-  pitchAnglePosition,
-  rollAnglePosition,
-  MwGPSLatPositionTop,
-  MwGPSLonPositionTop,
-  rssiPosition,
-  temperaturePosition,
-  voltagePosition,
-  vidvoltagePosition,
-  amperagePosition,
-  pMeterSumPosition,
-  horizonPosition,
-  SideBarPosition,
-  SideBarScrollPosition,
-  SideBarHeightSPARE,           // special function
-  SideBarWidthSPARE,            // special function
-  gimbalPosition,
-  GPS_timePosition,
-  SportPosition,
-  ModePosition,
-  MapModePosition,
-  MapCenterPosition,
-  APstatusPosition,
-  wattPosition,
-  glidescopePosition,
-  callSignPosition,
-  debugPosition,
-  climbratevaluePosition,
-  efficiencyPosition,
-  avgefficiencyPosition,
-  AIR_speedPosition,
-  MAX_speedPosition,
-  TotalDistanceposition,
-  WIND_speedPosition,
-  MaxDistanceposition,
-  DOPposition,
+    GPS_numSatPosition,
+    GPS_directionToHomePosition,
+    GPS_distanceToHomePosition,
+    GPS_speedPosition,
+    GPS_angleToHomePosition,
+    MwGPSAltPosition,
+    sensorPosition,
+    MwHeadingPosition,
+    MwHeadingGraphPosition,
+    MwAltitudePosition,
+    MwVarioPosition,
+    CurrentThrottlePosition,
+    flyTimePosition,
+    onTimePosition,
+    motorArmedPosition,
+    pitchAnglePosition,
+    rollAnglePosition,
+    MwGPSLatPositionTop,
+    MwGPSLonPositionTop,
+    rssiPosition,
+    temperaturePosition,
+    voltagePosition,
+    vidvoltagePosition,
+    amperagePosition,
+    pMeterSumPosition,
+    horizonPosition,
+    SideBarPosition,
+    SideBarScrollPosition,
+    SideBarHeightSPARE,           // special function
+    SideBarWidthSPARE,            // special function
+    gimbalPosition,
+    GPS_timePosition,
+    SportPosition,
+    ModePosition,
+    MapModePosition,
+    MapCenterPosition,
+    APstatusPosition,
+    wattPosition,
+    glidescopePosition,
+    callSignPosition,
+    debugPosition,
+    climbratevaluePosition,
+    efficiencyPosition,
+    avgefficiencyPosition,
+    AIR_speedPosition,
+    MAX_speedPosition,
+    TotalDistanceposition,
+    WIND_speedPosition,
+    MaxDistanceposition,
+    DOPposition,
 
-  POSITIONS_SETTINGS
+    POSITIONS_SETTINGS
 };
 
 #ifdef PROTOCOL_MAVLINK
-  #define DEF_sensorPosition DISPLAY_NEVER
-  #define DEF_horizonPosition DISPLAY_ALWAYS
-  #define DEF_modePosition DISPLAY_ALWAYS
+#define DEF_sensorPosition DISPLAY_NEVER
+#define DEF_horizonPosition DISPLAY_ALWAYS
+#define DEF_modePosition DISPLAY_ALWAYS
 #elif defined GPSOSD
-  #define DEF_sensorPosition DISPLAY_NEVER
-  #define DEF_horizonPosition DISPLAY_NEVER
-  #define DEF_modePosition DISPLAY_NEVER
+#define DEF_sensorPosition DISPLAY_NEVER
+#define DEF_horizonPosition DISPLAY_NEVER
+#define DEF_modePosition DISPLAY_NEVER
 #else
-  #define DEF_sensorPosition DISPLAY_ALWAYS
-  #define DEF_horizonPosition DISPLAY_ALWAYS
-  #define DEF_modePosition DISPLAY_ALWAYS
+#define DEF_sensorPosition DISPLAY_ALWAYS
+#define DEF_horizonPosition DISPLAY_ALWAYS
+#define DEF_modePosition DISPLAY_ALWAYS
 #endif
 
 uint16_t screenPosition[POSITIONS_SETTINGS];
 
 PROGMEM const uint16_t SCREENLAYOUT_DEFAULT[POSITIONS_SETTINGS] = {
-(LINE02+2)|DISPLAY_ALWAYS|DISPLAY_DEV,    // GPS_numSatPosition
-(LINE02+20)|DISPLAY_ALWAYS|DISPLAY_DEV,   // GPS_directionToHomePosition
-(LINE02+22)|DISPLAY_ALWAYS|DISPLAY_DEV,   // GPS_distanceToHomePosition
-(LINE07+2)|DISPLAY_ALWAYS|DISPLAY_DEV,    // GPS_speedPosition
-(LINE05+23)|DISPLAY_NEVER|DISPLAY_DEV,    // GPS_angleToHomePosition
-(LINE06+23)|DISPLAY_NEVER|DISPLAY_DEV,    // MwGPSAltPosition
-(LINE02+6)|DEF_sensorPosition|DISPLAY_DEV,    // sensorPosition
-(LINE04+23)|DISPLAY_NEVER|DISPLAY_DEV,    // MwHeadingPosition
-(LINE02+10)|DISPLAY_ALWAYS|DISPLAY_DEV,   // MwHeadingGraphPosition
-(LINE07+23)|DISPLAY_ALWAYS|DISPLAY_DEV,   // MwAltitudePosition
-(LINE07+22)|DISPLAY_ALWAYS|DISPLAY_DEV,   // MwVarioPosition
-(LINE12+22)|DISPLAY_ALWAYS|DISPLAY_DEV,   // CurrentThrottlePosition
-(LINE13+22)|DISPLAY_NEVER|DISPLAY_DEV,    //                             unused
-(LINE13+22)|DISPLAY_ALWAYS|DISPLAY_DEV,   // onTimePosition
-(LINE11+11)|DISPLAY_ALWAYS|DISPLAY_DEV,   // motorArmedPosition
-(LINE10+22)|DISPLAY_NEVER|DISPLAY_DEV,    // pitchAnglePosition
-(LINE11+22)|DISPLAY_NEVER|DISPLAY_DEV,    // rollAnglePosition
-(LINE01+2)|DISPLAY_ALWAYS|DISPLAY_DEV,    // MwGPSLatPositionTop         On top of screen
-(LINE01+15)|DISPLAY_ALWAYS|DISPLAY_DEV,   // MwGPSLonPositionTop         On top of screen
-(LINE12+2)|DISPLAY_ALWAYS|DISPLAY_DEV,    // rssiPosition
-(LINE09+8)|DISPLAY_NEVER|DISPLAY_DEV,     // temperaturePosition
-(LINE13+2)|DISPLAY_ALWAYS|DISPLAY_DEV,    // voltagePosition
-(LINE11+2)|DISPLAY_NEVER|DISPLAY_DEV,     // vidvoltagePosition
-(LINE13+9)|DISPLAY_ALWAYS|DISPLAY_DEV,    // amperagePosition
-(LINE13+16)|DISPLAY_ALWAYS|DISPLAY_DEV,   // pMeterSumPosition
-(LINE07+14)|DEF_horizonPosition|DISPLAY_DEV,   // horizonPosition
-(LINE07+7)|DISPLAY_ALWAYS|DISPLAY_DEV,    // SideBarPosition
-(LINE07+7)|DISPLAY_NEVER|DISPLAY_DEV,    // SideBarScrollPosition        Move to 8 bit
-(LINE01+3)|DISPLAY_NEVER,                 //                             Unused
-(LINE01+7)|DISPLAY_NEVER,                 //                             Unused
-(LINE04+2)|DISPLAY_NEVER|DISPLAY_DEV,     // Gimbal Position
-(LINE12+11)|DISPLAY_NEVER|DISPLAY_DEV,    // GPS_time Position
-(LINE09+22)|DISPLAY_NEVER|DISPLAY_DEV,    // SportPosition
-(LINE03+2)|DEF_modePosition|DISPLAY_DEV,  // modePosition
-(LINE02+22)|DISPLAY_NEVER,                // MapModePosition
-(LINE07+15)|DISPLAY_NEVER,                // MapCenterPosition
-(LINE04+10)|DISPLAY_ALWAYS|DISPLAY_DEV,   // APstatusPosition
-(LINE10+2)|DISPLAY_NEVER|DISPLAY_DEV,     // wattPosition
-(LINE07+6)|DISPLAY_ALWAYS|DISPLAY_DEV,    // glidescopePosition          Only enabled in fixedwing options
-(LINE12+12)|DISPLAY_NEVER|DISPLAY_DEV,    // callSignPosition
-(LINE08+10)|DISPLAY_NEVER|DISPLAY_DEV,    // Debug Position
-(LINE08+23)|DISPLAY_NEVER|DISPLAY_DEV,    // climbratevaluePosition,
-(LINE09+2)|DISPLAY_NEVER|DISPLAY_DEV,     // efficiencyPosition,
-(LINE08+2)|DISPLAY_NEVER|DISPLAY_DEV,     // avgefficiencyPosition,
-(LINE06+2)|DISPLAY_NEVER|DISPLAY_DEV,     // AIR_speedposition,
-(LINE05+8)|DISPLAY_NEVER|DISPLAY_DEV,     // MAX_speedposition,
-(LINE08+8)|DISPLAY_NEVER|DISPLAY_DEV,     // TotalDistanceposition
-(LINE03+22)|DISPLAY_NEVER|DISPLAY_DEV,    // WIND_speedposition,
-(LINE06+8)|DISPLAY_NEVER|DISPLAY_DEV,     // MaxDistanceposition
-(LINE05+2)|DISPLAY_NEVER|DISPLAY_DEV,     // DOPposition
+    (LINE02+2)|DISPLAY_ALWAYS|DISPLAY_DEV,    // GPS_numSatPosition
+    (LINE02+20)|DISPLAY_ALWAYS|DISPLAY_DEV,   // GPS_directionToHomePosition
+    (LINE02+22)|DISPLAY_ALWAYS|DISPLAY_DEV,   // GPS_distanceToHomePosition
+    (LINE07+2)|DISPLAY_ALWAYS|DISPLAY_DEV,    // GPS_speedPosition
+    (LINE05+23)|DISPLAY_NEVER|DISPLAY_DEV,    // GPS_angleToHomePosition
+    (LINE06+23)|DISPLAY_NEVER|DISPLAY_DEV,    // MwGPSAltPosition
+    (LINE02+6)|DEF_sensorPosition|DISPLAY_DEV,    // sensorPosition
+    (LINE04+23)|DISPLAY_NEVER|DISPLAY_DEV,    // MwHeadingPosition
+    (LINE02+10)|DISPLAY_ALWAYS|DISPLAY_DEV,   // MwHeadingGraphPosition
+    (LINE07+23)|DISPLAY_ALWAYS|DISPLAY_DEV,   // MwAltitudePosition
+    (LINE07+22)|DISPLAY_ALWAYS|DISPLAY_DEV,   // MwVarioPosition
+    (LINE12+22)|DISPLAY_ALWAYS|DISPLAY_DEV,   // CurrentThrottlePosition
+    (LINE13+22)|DISPLAY_NEVER|DISPLAY_DEV,    //                             unused
+    (LINE13+22)|DISPLAY_ALWAYS|DISPLAY_DEV,   // onTimePosition
+    (LINE11+11)|DISPLAY_ALWAYS|DISPLAY_DEV,   // motorArmedPosition
+    (LINE10+22)|DISPLAY_NEVER|DISPLAY_DEV,    // pitchAnglePosition
+    (LINE11+22)|DISPLAY_NEVER|DISPLAY_DEV,    // rollAnglePosition
+    (LINE01+2)|DISPLAY_ALWAYS|DISPLAY_DEV,    // MwGPSLatPositionTop         On top of screen
+    (LINE01+15)|DISPLAY_ALWAYS|DISPLAY_DEV,   // MwGPSLonPositionTop         On top of screen
+    (LINE12+2)|DISPLAY_ALWAYS|DISPLAY_DEV,    // rssiPosition
+    (LINE09+8)|DISPLAY_NEVER|DISPLAY_DEV,     // temperaturePosition
+    (LINE13+2)|DISPLAY_ALWAYS|DISPLAY_DEV,    // voltagePosition
+    (LINE11+2)|DISPLAY_NEVER|DISPLAY_DEV,     // vidvoltagePosition
+    (LINE13+9)|DISPLAY_ALWAYS|DISPLAY_DEV,    // amperagePosition
+    (LINE13+16)|DISPLAY_ALWAYS|DISPLAY_DEV,   // pMeterSumPosition
+    (LINE07+14)|DEF_horizonPosition|DISPLAY_DEV,   // horizonPosition
+    (LINE07+7)|DISPLAY_ALWAYS|DISPLAY_DEV,    // SideBarPosition
+    (LINE07+7)|DISPLAY_NEVER|DISPLAY_DEV,    // SideBarScrollPosition        Move to 8 bit
+    (LINE01+3)|DISPLAY_NEVER,                 //                             Unused
+    (LINE01+7)|DISPLAY_NEVER,                 //                             Unused
+    (LINE04+2)|DISPLAY_NEVER|DISPLAY_DEV,     // Gimbal Position
+    (LINE12+11)|DISPLAY_NEVER|DISPLAY_DEV,    // GPS_time Position
+    (LINE09+22)|DISPLAY_NEVER|DISPLAY_DEV,    // SportPosition
+    (LINE03+2)|DEF_modePosition|DISPLAY_DEV,  // modePosition
+    (LINE02+22)|DISPLAY_NEVER,                // MapModePosition
+    (LINE07+15)|DISPLAY_NEVER,                // MapCenterPosition
+    (LINE04+10)|DISPLAY_ALWAYS|DISPLAY_DEV,   // APstatusPosition
+    (LINE10+2)|DISPLAY_NEVER|DISPLAY_DEV,     // wattPosition
+    (LINE07+6)|DISPLAY_ALWAYS|DISPLAY_DEV,    // glidescopePosition          Only enabled in fixedwing options
+    (LINE12+12)|DISPLAY_NEVER|DISPLAY_DEV,    // callSignPosition
+    (LINE08+10)|DISPLAY_NEVER|DISPLAY_DEV,    // Debug Position
+    (LINE08+23)|DISPLAY_NEVER|DISPLAY_DEV,    // climbratevaluePosition,
+    (LINE09+2)|DISPLAY_NEVER|DISPLAY_DEV,     // efficiencyPosition,
+    (LINE08+2)|DISPLAY_NEVER|DISPLAY_DEV,     // avgefficiencyPosition,
+    (LINE06+2)|DISPLAY_NEVER|DISPLAY_DEV,     // AIR_speedposition,
+    (LINE05+8)|DISPLAY_NEVER|DISPLAY_DEV,     // MAX_speedposition,
+    (LINE08+8)|DISPLAY_NEVER|DISPLAY_DEV,     // TotalDistanceposition
+    (LINE03+22)|DISPLAY_NEVER|DISPLAY_DEV,    // WIND_speedposition,
+    (LINE06+8)|DISPLAY_NEVER|DISPLAY_DEV,     // MaxDistanceposition
+    (LINE05+2)|DISPLAY_NEVER|DISPLAY_DEV,     // DOPposition
 };
 
 static uint8_t P8[PIDITEMS], I8[PIDITEMS], D8[PIDITEMS];
@@ -747,18 +747,19 @@ int32_t  MwAltitude=0;                         // This hold barometric value
 int32_t  old_MwAltitude=0;                     // This hold barometric value
 
 
-int16_t MwAngle[2]={0,0};           // Those will hold Accelerometer Angle
-static uint16_t MwRcData[1+16]={   // This hold receiver pulse signal
-  1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500} ;
+int16_t MwAngle[2]= {0,0};          // Those will hold Accelerometer Angle
+static uint16_t MwRcData[1+16]= {  // This hold receiver pulse signal
+    1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500,1500
+} ;
 
 
 
-// for analogue / PWM sensor filtering 
+// for analogue / PWM sensor filtering
 #define SENSORFILTERSIZE 8
 #define SENSORTOTAL 5
 #define FHBANDWIDTH 100
 
-int16_t sensorfilter[SENSORTOTAL][SENSORFILTERSIZE+2]; 
+int16_t sensorfilter[SENSORTOTAL][SENSORFILTERSIZE+2];
 
 uint16_t  MwSensorPresent=0;
 uint32_t  MwSensorActive=0;
@@ -827,7 +828,8 @@ uint16_t flyTime=0;
 
 // For Heading
 const char headGraph[] PROGMEM = {
-  0x1d,0x1a,0x1d,0x1c,0x1d,0x19,0x1d,0x1c,0x1d,0x1b,0x1d,0x1c,0x1d,0x18,0x1d,0x1c,0x1d,0x1a,0x1d,0x1c,0x1d,0x19,0x1d,0x1c,0x1d,0x1b,0x1d};
+    0x1d,0x1a,0x1d,0x1c,0x1d,0x19,0x1d,0x1c,0x1d,0x1b,0x1d,0x1c,0x1d,0x18,0x1d,0x1c,0x1d,0x1a,0x1d,0x1c,0x1d,0x19,0x1d,0x1c,0x1d,0x1b,0x1d
+};
 static int16_t MwHeading=0;
 
 // For Amperage
@@ -860,29 +862,29 @@ uint32_t distanceMAX=0;
 uint16_t ampMAX=0;
 uint32_t trip=0;
 float tripSum = 0;
-uint16_t flyingTime=0; 
+uint16_t flyingTime=0;
 uint16_t voltageMIN=254;
 int16_t rssiMIN=100;
 
 
 // For GPSOSD
 #if defined GPSOSD
-  #define  LAT  0
-  #define  LON  1
-  #define  GPS_BAUD BAUDRATE
-  uint32_t GPS_home_timer=0;
-  int32_t  GPS_coord[2];
-  int32_t  GPS_home[4];
-//  uint16_t GPS_ground_course = 0;                       
-  int16_t  GPS_altitude_home;                            
-  int16_t  GPS_altitude_home_2;                            
-  uint8_t  GPS_Present = 0;                             
+#define  LAT  0
+#define  LON  1
+#define  GPS_BAUD BAUDRATE
+uint32_t GPS_home_timer=0;
+int32_t  GPS_coord[2];
+int32_t  GPS_home[4];
+//  uint16_t GPS_ground_course = 0;
+int16_t  GPS_altitude_home;
+int16_t  GPS_altitude_home_2;
+uint8_t  GPS_Present = 0;
 //  uint8_t  GPS_SerialInitialised=5;
-  uint8_t  GPS_armedangleset = 0;
-  uint8_t  GPS_active=5; 
-  uint8_t  GPS_fix_HOME=0;
-  const char satnogps_text[] PROGMEM = " NO GPS ";
-  uint8_t  GPSOSD_state=0;
+uint8_t  GPS_armedangleset = 0;
+uint8_t  GPS_active=5;
+uint8_t  GPS_fix_HOME=0;
+const char satnogps_text[] PROGMEM = " NO GPS ";
+uint8_t  GPSOSD_state=0;
 #endif
 
 // ---------------------------------------------------------------------------------------
@@ -906,7 +908,7 @@ int16_t rssiMIN=100;
 #define MSP_PID                  112   //out message         P I D coeff (9 are used currently)
 #define MSP_BOX                  113   //out message         BOX setup (number is dependant of your setup)
 #define MSP_MISC                 114   //out message         powermeter trig
-#define MSP_MOTOR_PINS           115   //out message         which pins are in use for motors & servos, for GUI 
+#define MSP_MOTOR_PINS           115   //out message         which pins are in use for motors & servos, for GUI
 #define MSP_BOXNAMES             116   //out message         the aux switch names
 #define MSP_PIDNAMES             117   //out message         the PID names
 #define MSP_BOXIDS               119   //out message         get the permanent IDs associated to BOXes
@@ -948,7 +950,7 @@ int16_t rssiMIN=100;
 #define MSP_SET_PID_CONTROLLER   60    //out message         sets a given pid controller
 
 // Cleanflight specific
-#define MSP_LOOP_TIME            73    //out message         Returns FC cycle time i.e looptime 
+#define MSP_LOOP_TIME            73    //out message         Returns FC cycle time i.e looptime
 #define MSP_SET_LOOP_TIME        74    //in message          Sets FC cycle time i.e looptime parameter
 
 // Baseflight specific
@@ -1001,39 +1003,37 @@ const char launch_text[]    PROGMEM = " LAUNCH";
 const char ready_text[]     PROGMEM = " READY";
 
 // For Alarm / Message text
-const PROGMEM char * const message_text[] =
-{   
-  blank_text,     //0
-  FAILtext,       //1
-  APRTHtext,      //2
-  APHOLDtext,     //3
-  APWAYPOINTtext,
+const PROGMEM char * const message_text[] = {
+    blank_text,     //0
+    FAILtext,       //1
+    APRTHtext,      //2
+    APHOLDtext,     //3
+    APWAYPOINTtext,
 };
 
-const PROGMEM char * const alarm_text[] =
-{   
-  blank_text,     //0
-  #if defined(GPSOSD)
+const PROGMEM char * const alarm_text[] = {
+    blank_text,     //0
+#if defined(GPSOSD)
     ready_text,  //1
     launch_text,     //2
     satwait_text,    //3
-  #else
-   disarmed_text,  //1
-   armed_text,     //2
-   nodata_text,    //3
-  #endif
-  nogps_text,     //4
-  satlow_text,    //5
-  lowvolts_text,  //6
-  debug_text,     //7
+#else
+    disarmed_text,  //1
+    armed_text,     //2
+    nodata_text,    //3
+#endif
+    nogps_text,     //4
+    satlow_text,    //5
+    lowvolts_text,  //6
+    debug_text,     //7
 };
 
 struct __alarms {
-  uint8_t active;
-  uint8_t  queue;
-  uint8_t  index;
-  uint8_t  alarm;
-}alarms;
+    uint8_t active;
+    uint8_t  queue;
+    uint8_t  index;
+    uint8_t  alarm;
+} alarms;
 
 #if defined LOADFONT_DEFAULT || defined LOADFONT_LARGE || defined LOADFONT_BOLD
 const char messageF0[] PROGMEM = "DO NOT POWER OFF";
@@ -1056,69 +1056,65 @@ const char introtext6[]  PROGMEM = "FC:";
 const char introtextblank[]  PROGMEM = "";
 
 // Intro
-const PROGMEM char * const intro_item[] =
-{   
-  introtext0,
-  introtextblank,
+const PROGMEM char * const intro_item[] = {
+    introtext0,
+    introtextblank,
 #ifdef INTRO_MENU
-  introtext1,
-  introtext2,
-  introtext3,
+    introtext1,
+    introtext2,
+    introtext3,
 #else
-  introtextblank,
-  introtextblank,
-  introtextblank,
+    introtextblank,
+    introtextblank,
+    introtextblank,
 #endif
-  introtextblank,
+    introtextblank,
 #ifdef INTRO_CALLSIGN
-  introtext4,
+    introtext4,
 #else
-  introtextblank,
+    introtextblank,
 #endif
 #ifdef INTRO_SIGNALTYPE
-  introtext5,
+    introtext5,
 #else
-  introtextblank,
+    introtextblank,
 #endif
 #ifdef INTRO_FC
-  introtext6,
+    introtext6,
 #else
-  introtextblank,
+    introtextblank,
 #endif
 };
 
-#ifdef AUTOCAM 
+#ifdef AUTOCAM
 const char signaltext0[]  PROGMEM = "NTSC";
 const char signaltext1[]  PROGMEM = "PAL";
 const char signaltext2[]  PROGMEM = "NOT DETECTED";
-const PROGMEM char * const signal_type[] =
-{   
-  signaltext0,
-  signaltext1,
-  signaltext2,
+const PROGMEM char * const signal_type[] = {
+    signaltext0,
+    signaltext1,
+    signaltext2,
 };
 #elif AUTOCAMFULL // FOr testing
 const char signaltext0[]  PROGMEM = "NTSC";
 const char signaltext1[]  PROGMEM = "PAL";
 const char signaltext2[]  PROGMEM = "NOT DETECTED-NTSC";
 const char signaltext3[]  PROGMEM = "NOT DETECTED-PAL";
-const PROGMEM char * const signal_type[] =
-{   
-  signaltext0,
-  signaltext1,
-  signaltext2,
-  signaltext3,
+const PROGMEM char * const signal_type[] = {
+    signaltext0,
+    signaltext1,
+    signaltext2,
+    signaltext3,
 };
 #else
 const char signaltext0[]  PROGMEM = "NTSC";
 const char signaltext1[]  PROGMEM = "PAL";
 const char signaltext2[]  PROGMEM = "";
-const PROGMEM char * const signal_type[] =
-{   
-  signaltext0,
-  signaltext1,
-  signaltext2,
-  signaltext2,
+const PROGMEM char * const signal_type[] = {
+    signaltext0,
+    signaltext1,
+    signaltext2,
+    signaltext2,
 };
 #endif
 
@@ -1170,12 +1166,12 @@ const char configMsg25[] PROGMEM = "TPA";
 const char configMsg26[] PROGMEM = "THROTTLE MID";
 const char configMsg27[] PROGMEM = "THROTTLE EXPO";
 #if defined CORRECT_MENU_RCT1
-  const char configMsg23a[] PROGMEM = "ROLL RATE";
-  const char configMsg23b[] PROGMEM = "PITCH RATE";
+const char configMsg23a[] PROGMEM = "ROLL RATE";
+const char configMsg23b[] PROGMEM = "PITCH RATE";
 #endif
 #if defined CORRECT_MENU_RCT2
-  const char configMsg23a[] PROGMEM = "ROLL RATE";
-  const char configMsg23b[] PROGMEM = "PITCH RATE";
+const char configMsg23a[] PROGMEM = "ROLL RATE";
+const char configMsg23b[] PROGMEM = "PITCH RATE";
 #endif
 //-----------------------------------------------------------Page3
 const char configMsg30[] PROGMEM = "VOLTAGE";
@@ -1270,65 +1266,64 @@ const char configMsg1622[] PROGMEM = "BOSCAM E";
 const char configMsg1623[] PROGMEM = "FATSHARK";
 const char configMsg1624[] PROGMEM = "RACE";
 
-  #ifdef VTX_REGION_UNRESTRICTED
-  // Menu selections
-  const PROGMEM char * const vtxPowerNames[] =
-  {   
+#ifdef VTX_REGION_UNRESTRICTED
+// Menu selections
+const PROGMEM char * const vtxPowerNames[] = {
     configMsg1610,
     configMsg1611,
     configMsg1612
-  };
-  // Menu selections
-  const PROGMEM char * const vtxBandNames[] =
-  {   
+};
+// Menu selections
+const PROGMEM char * const vtxBandNames[] = {
     configMsg1620,
     configMsg1621,
     configMsg1622,
     configMsg1623,
     configMsg1624
-  };
-  const PROGMEM char vtxBandLetters[] = "ABEFR";
+};
+const PROGMEM char vtxBandLetters[] = "ABEFR";
 
-  #elif defined(VTX_REGION_AUSTRALIA)
+#elif defined(VTX_REGION_AUSTRALIA)
 
-  // Menu selections
-  const PROGMEM char * const vtxPowerNames[] =
-  {   
+// Menu selections
+const PROGMEM char * const vtxPowerNames[] = {
     configMsg1610
-  };
-  // Menu selections
-  const PROGMEM char * const vtxBandNames[] =
-  {   
+};
+// Menu selections
+const PROGMEM char * const vtxBandNames[] = {
     configMsg1620,
     configMsg1621,
     configMsg1623,
     configMsg1624
-  };
-  const PROGMEM char vtxBandLetters[] = "ABFR";
-  #endif //VTX_REGION_XXXX
+};
+const PROGMEM char vtxBandLetters[] = "ABFR";
+#endif //VTX_REGION_XXXX
 
-const PROGMEM char * const menu_vtx[] = 
-{   
-  configMsg161,
-  configMsg162,
-  configMsg163,
-  configMsg164,
+const PROGMEM char * const menu_vtx[] = {
+    configMsg161,
+    configMsg162,
+    configMsg163,
+    configMsg164,
 };
 #endif //MENU_VTX
 //-----------------------------------------------------------MENU END
 
 // POSITION OF EACH CHARACTER OR LOGO IN THE MAX7456
-const unsigned char speedUnitAdd[2] ={
-  SYM_KMH,SYM_MPH} ; // [0][0] and [0][1] = Km/h   [1][0] and [1][1] = Mph
+const unsigned char speedUnitAdd[2] = {
+    SYM_KMH,SYM_MPH
+} ; // [0][0] and [0][1] = Km/h   [1][0] and [1][1] = Mph
 
-const unsigned char varioUnitAdd[2] ={
-  SYM_MS,SYM_FTS} ; // [0][0] and [0][1] = m/s   [1][0] and [1][1] = ft/s
+const unsigned char varioUnitAdd[2] = {
+    SYM_MS,SYM_FTS
+} ; // [0][0] and [0][1] = m/s   [1][0] and [1][1] = ft/s
 
-const unsigned char temperatureUnitAdd[2] ={
-  SYM_TEMP_C,SYM_TEMP_F};
+const unsigned char temperatureUnitAdd[2] = {
+    SYM_TEMP_C,SYM_TEMP_F
+};
 
-const unsigned char UnitsIcon[8]={
-  SYM_M,SYM_FT,SYM_M,SYM_FT,SYM_KM,SYM_M,SYM_KM,SYM_M};
+const unsigned char UnitsIcon[8]= {
+    SYM_M,SYM_FT,SYM_M,SYM_FT,SYM_KM,SYM_M,SYM_KM,SYM_M
+};
 //  SYM_ALTM,SYM_ALTFT,SYM_DISTHOME_M,SYM_DISTHOME_FT,SYM_ALTKM,SYM_ALTMI,SYM_DISTHOME_KM,SYM_DISTHOME_MI};
 
 #define REQ_MSP_IDENT     (1 <<  0)
@@ -1351,8 +1346,8 @@ const unsigned char UnitsIcon[8]={
 #define REQ_MSP_MISC           (1L<<16)
 #define REQ_MSP_ALARMS         (1L<<17)
 #define REQ_MSP_PID_CONTROLLER (1L<<18)
-#define REQ_MSP_LOOP_TIME      (1L<<19) 
-#define REQ_MSP_FW_CONFIG      (1L<<20) 
+#define REQ_MSP_LOOP_TIME      (1L<<19)
+#define REQ_MSP_FW_CONFIG      (1L<<20)
 #define REQ_MSP_PIDNAMES       (1L<<21)
 #define REQ_MSP_SERVO_CONF     (1L<<22)
 #define REQ_MSP_VOLTAGE_METER_CONFIG (1L<<23)
@@ -1362,17 +1357,16 @@ const unsigned char UnitsIcon[8]={
 
 // Menu
 //PROGMEM const char *menu_stats_item[] =
-const PROGMEM char * const menu_stats_item[] =
-{   
-  configMsg01,
-  configMsg02,
-  configMsg03,
-  configMsg04,
-  configMsg05,
-  configMsg06,
-  configMsg07,
-  configMsg08,
-  configMsg09,
+const PROGMEM char * const menu_stats_item[] = {
+    configMsg01,
+    configMsg02,
+    configMsg03,
+    configMsg04,
+    configMsg05,
+    configMsg06,
+    configMsg07,
+    configMsg08,
+    configMsg09,
 };
 
 #ifdef USE_MSP_PIDNAMES
@@ -1387,24 +1381,22 @@ const PROGMEM char * const menu_stats_item[] =
 char menu_pid[PIDNAME_NUMITEMS][PIDNAME_BUFSIZE];
 
 #else /* USE_MSP_PIDNAMES */
-const PROGMEM char * const menu_pid[] = 
-{   
-  configMsg11,
-  configMsg12,
-  configMsg13,
-  configMsg14,
-  configMsg15,
-  configMsg16,
-  configMsg17,
+const PROGMEM char * const menu_pid[] = {
+    configMsg11,
+    configMsg12,
+    configMsg13,
+    configMsg14,
+    configMsg15,
+    configMsg16,
+    configMsg17,
 #ifdef MENU_PID_VEL
-  configMsg18,
+    configMsg18,
 #endif
 };
 #endif
 
-const PROGMEM char * const menu_rc[] = 
-{   
-  #if defined CORRECT_MENU_RCT2
+const PROGMEM char * const menu_rc[] = {
+#if defined CORRECT_MENU_RCT2
     configMsg21,
     configMsg22,
     configMsg23a,
@@ -1413,7 +1405,7 @@ const PROGMEM char * const menu_rc[] =
     configMsg25,
     configMsg26,
     configMsg27,
-  #elif defined CORRECT_MENU_RCT1 
+#elif defined CORRECT_MENU_RCT1
     configMsg21,
     configMsg22,
     configMsg23a,
@@ -1422,7 +1414,7 @@ const PROGMEM char * const menu_rc[] =
     configMsg25,
     configMsg26,
     configMsg27,
-  #else //BF original / Cleanflight original / multiwii
+#else //BF original / Cleanflight original / multiwii
     configMsg21,
     configMsg22,
     configMsg23,
@@ -1430,165 +1422,151 @@ const PROGMEM char * const menu_rc[] =
     configMsg25,
     configMsg26,
     configMsg27,
-  #endif
+#endif
 
 };
 
-const PROGMEM char * const menu_bat[] = 
-{   
-  configMsg31,
-  configMsg32,
-  configMsg33,
-  configMsg34,
+const PROGMEM char * const menu_bat[] = {
+    configMsg31,
+    configMsg32,
+    configMsg33,
+    configMsg34,
 };
 
-const PROGMEM char * const menu_rssi[] = 
-{   
-  configMsg41,
-  configMsg42,
-  configMsg43,
+const PROGMEM char * const menu_rssi[] = {
+    configMsg41,
+    configMsg42,
+    configMsg43,
 };
 
-const PROGMEM char * const menu_amps[] = 
-{   
-  configMsg51,
-  configMsg52,
+const PROGMEM char * const menu_amps[] = {
+    configMsg51,
+    configMsg52,
 };
 
-const PROGMEM char * const menu_display[] = 
-{   
-  configMsg61,
+const PROGMEM char * const menu_display[] = {
+    configMsg61,
 };
 
-const PROGMEM char * const menu_advanced[] = 
-{   
-  configMsg71,
-  configMsg72,
+const PROGMEM char * const menu_advanced[] = {
+    configMsg71,
+    configMsg72,
 };
 
-const PROGMEM char * const menu_gps_time[] = 
-{   
-  configMsg81,
-  configMsg82,
-  configMsg83,
+const PROGMEM char * const menu_gps_time[] = {
+    configMsg81,
+    configMsg82,
+    configMsg83,
 };
 
-const PROGMEM char * const menu_alarm_item[] = 
-{   
-  configMsg91,
-  configMsg92,
-  configMsg93,
-  configMsg94,
-  configMsg95,
-  configMsg96,
-  configMsg97,
+const PROGMEM char * const menu_alarm_item[] = {
+    configMsg91,
+    configMsg92,
+    configMsg93,
+    configMsg94,
+    configMsg95,
+    configMsg96,
+    configMsg97,
 };
 
-const PROGMEM char * const menu_profile[] = 
-{   
-  configMsg101,
-  configMsg102,
-  configMsg103,
+const PROGMEM char * const menu_profile[] = {
+    configMsg101,
+    configMsg102,
+    configMsg103,
 };
 
-const PROGMEM char * const menu_fixedwing_bf[] = 
-{   
-  configMsg111,
-  configMsg112,
-  configMsg113,
-  configMsg114,
-  configMsg115,
-  configMsg116,
-  configMsg117,
-  configMsg118,
+const PROGMEM char * const menu_fixedwing_bf[] = {
+    configMsg111,
+    configMsg112,
+    configMsg113,
+    configMsg114,
+    configMsg115,
+    configMsg116,
+    configMsg117,
+    configMsg118,
 };
 
-const PROGMEM char * const menu_servo[] = 
-{   
-  configMsg121,
-  configMsg122,
-  configMsg123,
-  configMsg124,
-  configMsg125,
-  configMsg126,
-  configMsg127,
-  configMsg128,
+const PROGMEM char * const menu_servo[] = {
+    configMsg121,
+    configMsg122,
+    configMsg123,
+    configMsg124,
+    configMsg125,
+    configMsg126,
+    configMsg127,
+    configMsg128,
 };
 
-const PROGMEM char * const menu_rc_2[] = 
-{   
-  configMsg131,
-  configMsg132,
+const PROGMEM char * const menu_rc_2[] = {
+    configMsg131,
+    configMsg132,
 };
 
-const PROGMEM char * const menu_info[] = 
-{   
-  configMsg141,
-  configMsg142,
-  configMsg143,
-  configMsg144,
-  configMsg145,
+const PROGMEM char * const menu_info[] = {
+    configMsg141,
+    configMsg142,
+    configMsg143,
+    configMsg144,
+    configMsg145,
 };
 
-const PROGMEM char * const menutitle_item[] = 
-{   
+const PROGMEM char * const menutitle_item[] = {
 #ifdef MENU_STAT
-  configMsg00,
+    configMsg00,
 #endif
 #ifdef MENU_PID
-  configMsg10,
+    configMsg10,
 #endif
 #ifdef MENU_RC
-  configMsg20,
+    configMsg20,
 #endif
 #ifdef MENU_2RC
-  configMsg130,
+    configMsg130,
 #endif
 #ifdef MENU_INFO
-  configMsg140,
+    configMsg140,
 #endif
 #ifdef MENU_SERVO
-  configMsg120,
+    configMsg120,
 #endif
 #ifdef MENU_FIXEDWING
-  configMsg110,
+    configMsg110,
 #endif
 #ifdef MENU_VOLTAGE
-  configMsg30,
+    configMsg30,
 #endif
 #ifdef MENU_RSSI
-  configMsg40,
+    configMsg40,
 #endif
 #ifdef MENU_CURRENT
-  configMsg50,
+    configMsg50,
 #endif
 #ifdef MENU_DISPLAY
-  configMsg60,
+    configMsg60,
 #endif
 #ifdef MENU_ADVANCED
-  configMsg70,
+    configMsg70,
 #endif
 #ifdef MENU_GPS_TIME
-  configMsg80,
+    configMsg80,
 #endif
 #ifdef MENU_ALARMS
-  configMsg90,
+    configMsg90,
 #endif
 #ifdef MENU_PROFILE
-  configMsg100,
+    configMsg100,
 #endif
 #ifdef MENU_DEBUG
-  configMsg150,
+    configMsg150,
 #endif
 #ifdef USE_MENU_VTX
-  configMsg160,
+    configMsg160,
 #endif
 };
 
-const PROGMEM char * const menu_on_off[] = 
-{   
-  configMsgOFF,
-  configMsgON,
+const PROGMEM char * const menu_on_off[] = {
+    configMsgOFF,
+    configMsgON,
 };
 
 #ifdef MODETEXTMODE
@@ -1608,23 +1586,22 @@ const char msp_mode_LNCH[] PROGMEM   = "LNCH"; //Launch mode - or gone to lunch 
 const char msp_mode_AIR[]  PROGMEM   = "AIR "; //Air mode
 const char msp_mode_MSP[]  PROGMEM   = "****"; //Unknown MSP mode
 
-const PROGMEM char * const msp_mode_index[] = 
-{   
- msp_mode_ACRO, //0
- msp_mode_STAB,
- msp_mode_HOZN,
- msp_mode_BARO,
- msp_mode_MAG,
- msp_mode_RTH,
- msp_mode_HOLD,
- msp_mode_WAYP, 
- msp_mode_CAM, 
- msp_mode_AIR,
- msp_mode_LNCH, 
- msp_mode_2D, 
- msp_mode_FAIL, 
- msp_mode_PASS, 
- msp_mode_MSP, 
+const PROGMEM char * const msp_mode_index[] = {
+    msp_mode_ACRO, //0
+    msp_mode_STAB,
+    msp_mode_HOZN,
+    msp_mode_BARO,
+    msp_mode_MAG,
+    msp_mode_RTH,
+    msp_mode_HOLD,
+    msp_mode_WAYP,
+    msp_mode_CAM,
+    msp_mode_AIR,
+    msp_mode_LNCH,
+    msp_mode_2D,
+    msp_mode_FAIL,
+    msp_mode_PASS,
+    msp_mode_MSP,
 };
 #endif
 
@@ -1644,13 +1621,13 @@ const PROGMEM char * const msp_mode_index[] =
 #define MAVLINK_MSG_ID_GPS_RAW_INT_LEN 30
 #define MAVLINK_MSG_ID_RC_CHANNELS_RAW 35
 #define MAVLINK_MSG_ID_RC_CHANNELS_RAW_MAGIC 244
-#define MAVLINK_MSG_ID_RC_CHANNELS_RAW_LEN 22    
+#define MAVLINK_MSG_ID_RC_CHANNELS_RAW_LEN 22
 #define MAVLINK_MSG_ID_RC_CHANNELS 65
 #define MAVLINK_MSG_ID_RC_CHANNELS_MAGIC 118
-#define MAVLINK_MSG_ID_RC_CHANNELS_LEN 42    
+#define MAVLINK_MSG_ID_RC_CHANNELS_LEN 42
 #define MAVLINK_MSG_ID_SYS_STATUS 1
 #define MAVLINK_MSG_ID_SYS_STATUS_MAGIC 124
-#define MAVLINK_MSG_ID_SYS_STATUS_LEN 31  
+#define MAVLINK_MSG_ID_SYS_STATUS_LEN 31
 #define MAVLINK_MSG_ID_REQUEST_DATA_STREAM 66
 #define MAVLINK_MSG_ID_REQUEST_DATA_STREAM_MAGIC 148
 #define MAVLINK_MSG_ID_REQUEST_DATA_STREAM_LEN 6
@@ -1662,26 +1639,26 @@ const PROGMEM char * const msp_mode_index[] =
 #define MAVLINK_MSG_ID_MISSION_CURRENT_LEN 2
 #define MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT 62
 #define MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_MAGIC 183
-#define MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN 26 
+#define MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN 26
 #define MAVLINK_MSG_ID_RADIO_STATUS 109
 #define MAVLINK_MSG_ID_RADIO_STATUS_MAGIC 185
-#define MAVLINK_MSG_ID_RADIO_STATUS_LEN 9 
+#define MAVLINK_MSG_ID_RADIO_STATUS_LEN 9
 #define MAVLINK_MSG_ID_RADIO 166
 #define MAVLINK_MSG_ID_RADIO_MAGIC 21
-#define MAVLINK_MSG_ID_RADIO_LEN 9 
+#define MAVLINK_MSG_ID_RADIO_LEN 9
 #define MAVLINK_MSG_ID_SCALED_PRESSURE 29
 #define MAVLINK_MSG_ID_SCALED_PRESSURE_MAGIC 115
-#define MAVLINK_MSG_ID_SCALED_PRESSURE_LEN 14 
+#define MAVLINK_MSG_ID_SCALED_PRESSURE_LEN 14
 #define MAVLINK_MSG_ID_SCALED_PRESSURE2 137
 #define MAVLINK_MSG_ID_SCALED_PRESSURE2_MAGIC 14
-#define MAVLINK_MSG_ID_SCALED_PRESSURE2_LEN 195 
+#define MAVLINK_MSG_ID_SCALED_PRESSURE2_LEN 195
 #define MAVLINK_MSG_ID_BATTERY2 181
 #define MAVLINK_MSG_ID_BATTERY2_MAGIC 174
-#define MAVLINK_MSG_ID_BATTERY2_LEN 4 
+#define MAVLINK_MSG_ID_BATTERY2_LEN 4
 
 #define MAVLINK_MSG_ID_STATUSTEXT 253
 #define MAVLINK_MSG_ID_STATUSTEXT_MAGIC 83
-#define MAVLINK_MSG_ID_STATUSTEXT_LEN 51 
+#define MAVLINK_MSG_ID_STATUSTEXT_LEN 51
 
 #define MAV_DATA_STREAM_RAW_SENSORS 1
 #define MAV_DATA_STREAM_EXTENDED_STATUS 2
@@ -1716,20 +1693,19 @@ const char mav_mode_LAND[] PROGMEM   = "LAND"; // Landing
 //const char mav_mode_ACRO[] PROGMEM   = "ACRO"; // Acrobatic: rate control
 const char mav_mode_OFFB[] PROGMEM   = "OFFB"; // Offboard control
 //const char mav_mode_STAB[] PROGMEM   = "STAB"; // Stabilize: hold level position
-const PROGMEM char * const mav_mode_index[] = 
-{   
- mav_mode_MANU, //0
- mav_mode_ALTC,
- mav_mode_POSC,
- mav_mode_TKOF,
- mav_mode_LOIT,
- mav_mode_MISS,
- mav_mode_RETL,
- mav_mode_LAND,
- mav_mode_ACRO,
- mav_mode_OFFB,
- mav_mode_STAB, //10
- mav_mode_PX4,  //11
+const PROGMEM char * const mav_mode_index[] = {
+    mav_mode_MANU, //0
+    mav_mode_ALTC,
+    mav_mode_POSC,
+    mav_mode_TKOF,
+    mav_mode_LOIT,
+    mav_mode_MISS,
+    mav_mode_RETL,
+    mav_mode_LAND,
+    mav_mode_ACRO,
+    mav_mode_OFFB,
+    mav_mode_STAB, //10
+    mav_mode_PX4,  //11
 };
 #define MAV_MODE_MAX 17
 #elif defined FIXEDWING // within MAVLINK
@@ -1739,26 +1715,25 @@ const char mav_mode_FBWA[] PROGMEM   = "FBWA"; //Fly-by-wire A
 const char mav_mode_FBWB[] PROGMEM   = "FBWB"; //Fly-by-wire B
 const char mav_mode_CRUI[] PROGMEM   = "CRUI"; //Cruise
 const char mav_mode_INIT[] PROGMEM   = "INIT"; //Init
-const PROGMEM char * const mav_mode_index[] = 
-{   
- mav_mode_MANU, //0
- mav_mode_CIRC,
- mav_mode_STAB,
- mav_mode_TRNG,
- mav_mode_ACRO,
- mav_mode_FBWA,
- mav_mode_FBWB,
- mav_mode_CRUI,
- mav_mode_ATUN, 
- mav_mode_APM , 
- mav_mode_AUTO,
- mav_mode_RETL,
- mav_mode_LOIT,
- mav_mode_APM , 
- mav_mode_APM , 
- mav_mode_GUID,
- mav_mode_INIT, //16
- mav_mode_APM , //17
+const PROGMEM char * const mav_mode_index[] = {
+    mav_mode_MANU, //0
+    mav_mode_CIRC,
+    mav_mode_STAB,
+    mav_mode_TRNG,
+    mav_mode_ACRO,
+    mav_mode_FBWA,
+    mav_mode_FBWB,
+    mav_mode_CRUI,
+    mav_mode_ATUN,
+    mav_mode_APM,
+    mav_mode_AUTO,
+    mav_mode_RETL,
+    mav_mode_LOIT,
+    mav_mode_APM,
+    mav_mode_APM,
+    mav_mode_GUID,
+    mav_mode_INIT, //16
+    mav_mode_APM,  //17
 };
 #define MAV_MODE_MAX 17
 #else
@@ -1766,48 +1741,47 @@ const char mav_mode_ALTH[] PROGMEM   = "ALTH"; //Altitude Hold: auto control
 const char mav_mode_POSI[] PROGMEM   = "POSI"; //Position: auto control
 const char mav_mode_LAND[] PROGMEM   = "LAND"; //Land:: auto control
 const char mav_mode_OFLO[] PROGMEM   = "OFLO"; //OF_Loiter: hold a single location using optical flow sensor
-const char mav_mode_DRIF[] PROGMEM   = "DRIF"; //Drift mode: 
+const char mav_mode_DRIF[] PROGMEM   = "DRIF"; //Drift mode:
 const char mav_mode_SPRT[] PROGMEM   = "SPRT"; //Sport: earth frame rate control
 const char mav_mode_FLIP[] PROGMEM   = "FLIP"; //Flip: flip the vehicle on the roll axis
 const char mav_mode_HYBR[] PROGMEM   = "HYBR"; //Hybrid: position hold with manual override
-const PROGMEM char * const mav_mode_index[] = 
-{   
- mav_mode_STAB, //0
- mav_mode_ACRO,
- mav_mode_ALTH,
- mav_mode_AUTO,
- mav_mode_GUID,
- mav_mode_LOIT,
- mav_mode_RETL,
- mav_mode_CIRC,
- mav_mode_POSI,
- mav_mode_LAND,
- mav_mode_OFLO,
- mav_mode_DRIF,
- mav_mode_APM, 
- mav_mode_SPRT,
- mav_mode_FLIP,
- mav_mode_ATUN,
- mav_mode_HYBR, //16
- mav_mode_APM , //17
+const PROGMEM char * const mav_mode_index[] = {
+    mav_mode_STAB, //0
+    mav_mode_ACRO,
+    mav_mode_ALTH,
+    mav_mode_AUTO,
+    mav_mode_GUID,
+    mav_mode_LOIT,
+    mav_mode_RETL,
+    mav_mode_CIRC,
+    mav_mode_POSI,
+    mav_mode_LAND,
+    mav_mode_OFLO,
+    mav_mode_DRIF,
+    mav_mode_APM,
+    mav_mode_SPRT,
+    mav_mode_FLIP,
+    mav_mode_ATUN,
+    mav_mode_HYBR, //16
+    mav_mode_APM,  //17
 };
 #define MAV_MODE_MAX 17
 #endif //FIXEDWING
 
 // Vars
 struct __mw_mav {
-  uint8_t  message_cmd;
-  uint8_t  message_length;
-  uint8_t  mode;
-  uint8_t  sequence;
-  uint16_t serial_checksum;
-  uint16_t tx_checksum;
-  uint16_t throttle;
-}mw_mav;
+    uint8_t  message_cmd;
+    uint8_t  message_length;
+    uint8_t  mode;
+    uint8_t  sequence;
+    uint16_t serial_checksum;
+    uint16_t tx_checksum;
+    uint16_t throttle;
+} mw_mav;
 
 int32_t  GPS_home[2];
 uint8_t  GPS_fix_HOME;
-int16_t  GPS_altitude_home;                            
+int16_t  GPS_altitude_home;
 #endif //MAVLINK
 
 
@@ -1847,41 +1821,40 @@ const char ltm_mode_CRUI[] PROGMEM   = "CRUI"; //Cruise
 const char ltm_mode_LAND[] PROGMEM   = "LAND"; //Land
 const char ltm_mode_LTM[]  PROGMEM   = "LTM "; //Unknown LTM mode
 
-const PROGMEM char * const ltm_mode_index[] = 
-{   
- ltm_mode_MANU, //0
- ltm_mode_RATE,
- ltm_mode_STAB,
- ltm_mode_HOZN,
- ltm_mode_ACRO,
- ltm_mode_STAB,
- ltm_mode_STAB,
- ltm_mode_STAB,
- ltm_mode_HOLD, 
- ltm_mode_HOLD, 
- ltm_mode_WAYP,
- ltm_mode_HEAD,
- ltm_mode_CIRC,
- ltm_mode_RTH , 
- ltm_mode_FOLL, 
- ltm_mode_LAND,
- ltm_mode_FBWA,
- ltm_mode_FBWB, 
- ltm_mode_CRUI, 
- ltm_mode_LTM , 
+const PROGMEM char * const ltm_mode_index[] = {
+    ltm_mode_MANU, //0
+    ltm_mode_RATE,
+    ltm_mode_STAB,
+    ltm_mode_HOZN,
+    ltm_mode_ACRO,
+    ltm_mode_STAB,
+    ltm_mode_STAB,
+    ltm_mode_STAB,
+    ltm_mode_HOLD,
+    ltm_mode_HOLD,
+    ltm_mode_WAYP,
+    ltm_mode_HEAD,
+    ltm_mode_CIRC,
+    ltm_mode_RTH,
+    ltm_mode_FOLL,
+    ltm_mode_LAND,
+    ltm_mode_FBWA,
+    ltm_mode_FBWB,
+    ltm_mode_CRUI,
+    ltm_mode_LTM,
 };
 
 // Vars
 struct __mw_ltm {
-  uint8_t mode;
-  uint8_t LTMreceiverIndex;
-  uint8_t LTMcmd;
-  uint8_t LTMrcvChecksum;
-  uint8_t LTMreadIndex;
-  uint8_t LTMframelength;
-  uint16_t GPS_altitude_home;
-  uint16_t batUsedCapacity;  
-}mw_ltm;
+    uint8_t mode;
+    uint8_t LTMreceiverIndex;
+    uint8_t LTMcmd;
+    uint8_t LTMrcvChecksum;
+    uint8_t LTMreadIndex;
+    uint8_t LTMframelength;
+    uint16_t GPS_altitude_home;
+    uint16_t batUsedCapacity;
+} mw_ltm;
 
 #endif // PROTOCOL_LTM
 
@@ -1891,11 +1864,10 @@ const char KISS_mode_ACRO[] PROGMEM   = ""; //Acrobatic: rate control
 const char KISS_mode_STAB[] PROGMEM   = "STAB"; //Stabilize: hold level position
 const char KISS_mode_3D[]   PROGMEM   = "3D"; //Stabilize: hold level position
 
-const PROGMEM char * const KISS_mode_index[] = 
-{   
- KISS_mode_ACRO,
- KISS_mode_STAB, 
- KISS_mode_3D, 
+const PROGMEM char * const KISS_mode_index[] = {
+    KISS_mode_ACRO,
+    KISS_mode_STAB,
+    KISS_mode_3D,
 };
 
 #define ESC_FILTER 10
@@ -1905,12 +1877,12 @@ uint8_t KISSserialBuffer[KISSFRAMELENGTH];
 
 // Vars
 struct __Kvar {
-  uint8_t mode;
-  uint8_t index;
-  uint8_t payloadlength;
-  uint8_t readIndex;
-  uint8_t framelength;
-  uint16_t cksumtmp;
+    uint8_t mode;
+    uint8_t index;
+    uint8_t payloadlength;
+    uint8_t readIndex;
+    uint8_t framelength;
+    uint16_t cksumtmp;
 }
 Kvar;
 
@@ -1920,20 +1892,19 @@ Kvar;
 #ifdef NAZA
 // Vars
 struct __Naza {
-  uint8_t mode;
+    uint8_t mode;
 }
-Naza; 
+Naza;
 
 const char naza_mode_GPSA[] PROGMEM   = "GPSA"; //GPS ATTI
 const char naza_mode_ATTI[] PROGMEM   = "ATTI"; //ATTI
 const char naza_mode_MANU[] PROGMEM   = "MANU";
 const char naza_mode_FAIL[] PROGMEM   = "FAIL";
-const PROGMEM char * const NAZA_mode_index[] = 
-{   
- naza_mode_FAIL, //0
- naza_mode_MANU,
- naza_mode_ATTI,
- naza_mode_GPSA,
+const PROGMEM char * const NAZA_mode_index[] = {
+    naza_mode_FAIL, //0
+    naza_mode_MANU,
+    naza_mode_ATTI,
+    naza_mode_GPSA,
 };
 #endif // NAZA
 

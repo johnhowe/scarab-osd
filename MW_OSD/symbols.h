@@ -1,6 +1,6 @@
 /*
  *  symbols.h
- *  
+ *
  *
  *
  */
@@ -11,9 +11,9 @@
 #define SYM_DEGREES 0XBD
 
 
-// Direction arrows 
-  #define SYM_ARROW_HOME 0X60
-  #define SYM_ARROW_DIR 0XE0
+// Direction arrows
+#define SYM_ARROW_HOME 0X60
+#define SYM_ARROW_DIR 0XE0
 #define SYM_ARROW_2 0X61
 #define SYM_ARROW_3 0X62
 #define SYM_ARROW_4 0X63
@@ -31,7 +31,7 @@
 #define SYM_ARROW_16 0X6F
 
 // Heading Graphics
-#define SYM_HEADING_N 0X18 
+#define SYM_HEADING_N 0X18
 #define SYM_HEADING_S 0X19
 #define SYM_HEADING_E 0X1A
 #define SYM_HEADING_W 0X1B
@@ -71,7 +71,7 @@
 //#define SYM_ALT 0XCC
 
 // GPS Mode and Autopilot
-#define SYM_3DFIX 0XDF 
+#define SYM_3DFIX 0XDF
 #define SYM_HOLD 0XEF
 #define SYM_G_HOME 0XFF
 #define SYM_GHOME 0X9D
@@ -83,8 +83,8 @@
 #define SYM_GLAND 0XB7
 #define SYM_GLAND1 0XB8
 
-// Gimbal active Mode 
-#define SYM_GIMBAL 0X16 
+// Gimbal active Mode
+#define SYM_GIMBAL 0X16
 #define SYM_GIMBAL1 0X17
 
 
@@ -104,13 +104,13 @@
 // AH Center screen Graphics
 //#define SYM_AH_CENTER 0X01
 #ifdef ALT_CENTER
-  #define SYM_AH_CENTER_LINE 0XB0
-  #define SYM_AH_CENTER 0XB1
-  #define SYM_AH_CENTER_LINE_RIGHT 0XB2
+#define SYM_AH_CENTER_LINE 0XB0
+#define SYM_AH_CENTER 0XB1
+#define SYM_AH_CENTER_LINE_RIGHT 0XB2
 #else
-  #define SYM_AH_CENTER_LINE 0X26
-  #define SYM_AH_CENTER 0X7E
-  #define SYM_AH_CENTER_LINE_RIGHT 0XBC
+#define SYM_AH_CENTER_LINE 0X26
+#define SYM_AH_CENTER 0X7E
+#define SYM_AH_CENTER_LINE_RIGHT 0XBC
 #endif
 #define SYM_AH_RIGHT 0X02
 #define SYM_AH_LEFT 0X03
@@ -161,7 +161,7 @@
 #define SYM_DISTHOME_MI 0XBB
 #define SYM_FT 0X0D
 
-// Voltage and amperage 
+// Voltage and amperage
 #define SYM_VOLT 0XA9
 #define SYM_AMP 0X9A
 #define SYM_MAH 0XA4
@@ -221,9 +221,9 @@
 #endif
 
 #ifdef ICON_SPEED_GPS
-#define SYM_SPEED_GPS     0XF5 
+#define SYM_SPEED_GPS     0XF5
 #else
-#define SYM_SPEED_GPS     0 
+#define SYM_SPEED_GPS     0
 #endif
 
 #ifdef ICON_SPEED_AIR
@@ -233,57 +233,57 @@
 #endif
 
 #ifdef ICON_MAX
-#define SYM_MAX           0XF7 
+#define SYM_MAX           0XF7
 #else
-#define SYM_MAX           0 
+#define SYM_MAX           0
 #endif
 
 #ifdef ICON_CLIMBRATE
-#define SYM_CLIMBRATE     0XF8 
+#define SYM_CLIMBRATE     0XF8
 #else
-#define SYM_CLIMBRATE     0 
+#define SYM_CLIMBRATE     0
 #endif
 
 #ifdef ICON_EFF
-#define SYM_EFF           0XF9 
+#define SYM_EFF           0XF9
 #else
-#define SYM_EFF           0 
+#define SYM_EFF           0
 #endif
 
 #ifdef ICON_PITCH
-#define SYM_PITCH         0XFA 
+#define SYM_PITCH         0XFA
 #else
-#define SYM_PITCH         0 
+#define SYM_PITCH         0
 #endif
 
 #ifdef ICON_ROLL
-#define SYM_ROLL          0XFB 
+#define SYM_ROLL          0XFB
 #else
-#define SYM_ROLL          0 
+#define SYM_ROLL          0
 #endif
 
 #ifdef ICON_POWER
-#define SYM_POWER         0XFC 
+#define SYM_POWER         0XFC
 #else
-#define SYM_POWER         0 
+#define SYM_POWER         0
 #endif
 
 #ifdef ICON_AVG_EFF
-#define SYM_AVG_EFF       0XFD 
+#define SYM_AVG_EFF       0XFD
 #else
-#define SYM_AVG_EFF       0 
+#define SYM_AVG_EFF       0
 #endif
 
 #ifdef ICON_TOTAL
-#define SYM_TOTAL         0XFE 
+#define SYM_TOTAL         0XFE
 #else
-#define SYM_TOTAL         0 
+#define SYM_TOTAL         0
 #endif
 
 #ifdef ICON_TMP
-#define SYM_TMP           0X06 
+#define SYM_TMP           0X06
 #else
-#define SYM_TMP           0 
+#define SYM_TMP           0
 #endif
 
 #ifdef ICON_DTH

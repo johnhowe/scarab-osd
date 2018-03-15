@@ -1,27 +1,27 @@
 /*
-  WireUB.cpp - I2C UART Bridge library, heavily modified from...
+   WireUB.cpp - I2C UART Bridge library, heavily modified from...
 
-  TwoWire.cpp - TWI/I2C library for Wiring & Arduino
-  Copyright (c) 2006 Nicholas Zambetti.  All right reserved.
+   TwoWire.cpp - TWI/I2C library for Wiring & Arduino
+   Copyright (c) 2006 Nicholas Zambetti.  All right reserved.
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+   This library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
+   This library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
 
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- 
-  Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
+   You should have received a copy of the GNU Lesser General Public
+   License along with this library; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-  Modified 2016 by jflyper for UART Bridge Slave
-*/
+   Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
+
+   Modified 2016 by jflyper for UART Bridge Slave
+   */
 
 #include "Config.h" // Look for I2C_UB_SUPPORT
 
@@ -30,11 +30,11 @@
 #define EMBEDDED // Not a standalone bridge
 
 extern "C" {
-  #include <stdlib.h>
-  #include <string.h>
-  #include <inttypes.h>
-  #include <avr/io.h>
-  #include "twislave.h"
+#include <stdlib.h>
+#include <string.h>
+#include <inttypes.h>
+#include <avr/io.h>
+#include "twislave.h"
 }
 
 #include "Arduino.h"
@@ -60,8 +60,8 @@ uint8_t thrThreshold = 4;  // dnBuffer
 #define ACTIVELOW_ON(pin) pinMode(pin, OUTPUT)
 #define ACTIVELOW_OFF(pin) pinMode(pin, INPUT)
 #define ACTIVELOW_INIT(pin) {\
-  digitalWrite(pin, LOW);\
-  ACTIVELOW_OFF(pin);}
+    digitalWrite(pin, LOW);\
+    ACTIVELOW_OFF(pin);}
 
 // Constructors ////////////////////////////////////////////////////////////////
 
@@ -73,65 +73,66 @@ TwoWireUB::TwoWireUB()
 
 void TwoWireUB::begin(void)
 {
-  if (irqpin >= 0)
-    ACTIVELOW_INIT(irqpin);
+    if (irqpin >= 0) {
+        ACTIVELOW_INIT(irqpin);
+    }
 
-  reg_iir = IS7x0_IIR_INTSTAT;
+    reg_iir = IS7x0_IIR_INTSTAT;
 
-  twis_init();
+    twis_init();
 }
 
 void TwoWireUB::begin(uint8_t address, int pin)
 {
-  twis_setAddress(address);
+    twis_setAddress(address);
 
-  irqpin = pin;
+    irqpin = pin;
 
-  //twis_attachSlaveTxEvent(onRequestService);
-  twis_attachRegisterWriteHandler(onRegisterWrite);
+    //twis_attachSlaveTxEvent(onRequestService);
+    twis_attachRegisterWriteHandler(onRegisterWrite);
 
-  begin();
+    begin();
 }
 
 void TwoWireUB::begin(int address, int pin)
 {
-  begin((uint8_t)address, pin);
+    begin((uint8_t)address, pin);
 }
 
 void TwoWireUB::end(void)
 {
-  twis_disable();
+    twis_disable();
 }
 
 void TwoWireUB::setClock(uint32_t frequency)
 {
-  TWBR = ((F_CPU / frequency) - 16) / 2;
+    TWBR = ((F_CPU / frequency) - 16) / 2;
 }
 
 void TwoWireUB::setWriteTimo(unsigned long timo)
 {
-  writeTimo = timo;
+    writeTimo = timo;
 }
 
 void TwoWireUB::setThreshold(int rxlevel, int txlevel)
 {
-   // Sanity check?
-   rhrThreshold = rxlevel;
-   thrThreshold = txlevel;
+    // Sanity check?
+    rhrThreshold = rxlevel;
+    thrThreshold = txlevel;
 }
 
 size_t TwoWireUB::write(const uint8_t data)
 {
-  lastWrite = micros();
-  twis_txenq(&data, 1);
-  return 1;
+    lastWrite = micros();
+    twis_txenq(&data, 1);
+    return 1;
 }
 
 size_t TwoWireUB::write(const uint8_t *data, size_t quantity)
 {
-  lastWrite = micros();
-  twis_txenq(data, quantity);
-  return quantity;
+    lastWrite = micros();
+    twis_txenq(data, quantity);
+    return quantity;
 }
 
 // must be called in:
@@ -139,53 +140,53 @@ size_t TwoWireUB::write(const uint8_t *data, size_t quantity)
 // or after requestFrom(address, numBytes)
 int TwoWireUB::available(void)
 {
-  return twis_available();
+    return twis_available();
 }
 
 int TwoWireUB::read(void)
 {
-  return twis_read();
+    return twis_read();
 }
 
 int TwoWireUB::peek(void)
 {
-  return twis_peek();
+    return twis_peek();
 }
 
 void TwoWireUB::flush(void)
 {
-  // XXX: to be implemented.
+    // XXX: to be implemented.
 }
 
 // Called from ISR upon non-FIFO register writes.
 void TwoWireUB::onRegisterWrite(uint8_t reg, uint8_t data)
 {
-  uint8_t fcr;
+    uint8_t fcr;
 
-  switch (reg) {
-  case IS7x0_REG_FCR:
-    // Should handle FIFO reset
-    fcr = data;
-    break;
+    switch (reg) {
+    case IS7x0_REG_FCR:
+        // Should handle FIFO reset
+        fcr = data;
+        break;
 
-  case IS7x0_REG_IOCONTROL:
-    // Should handle software reset
-    break;
+    case IS7x0_REG_IOCONTROL:
+        // Should handle software reset
+        break;
 
 #ifndef EMBEDDED
-  case UB_REG_BRH:
-    reg_brh = data;
-    break;
+    case UB_REG_BRH:
+        reg_brh = data;
+        break;
 
-  case UB_REG_BRL:
-    // Calling Serial.begin() on already began Serial shouldn't be a problem.
-    Serial.begin(((reg_brh << 8) | data) * 150);
-    break;
+    case UB_REG_BRL:
+        // Calling Serial.begin() on already began Serial shouldn't be a problem.
+        Serial.begin(((reg_brh << 8) | data) * 150);
+        break;
 #endif
 
-  default:
-    break;
-  }
+    default:
+        break;
+    }
 }
 
 // Preinstantiate Objects //////////////////////////////////////////////////////

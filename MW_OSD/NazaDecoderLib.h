@@ -1,14 +1,14 @@
 #if defined NAZA
 
 /*
-  DJI Naza (v1, v1 Lite, V2) data decoder library
-  (c) Pawelsky 20141130
-  Not for commercial use
+   DJI Naza (v1, v1 Lite, V2) data decoder library
+   (c) Pawelsky 20141130
+   Not for commercial use
 
-  Refer to naza_decoder_wiring.jpg diagram for proper connection
+   Refer to naza_decoder_wiring.jpg diagram for proper connection
 
-  The RC PWM input code taken from https://www.instructables.com/id/RC-Quadrotor-Helicopter/step12/Arduino-Demo-PWM-Input/
-*/
+   The RC PWM input code taken from https://www.instructables.com/id/RC-Quadrotor-Helicopter/step12/Arduino-Demo-PWM-Input/
+   */
 
 #ifndef __NAZA_DECODER_LIB_H__
 #define __NAZA_DECODER_LIB_H__
@@ -24,12 +24,12 @@
 #define NAZA_MESSAGE_COMPASS 0x20
 
 #if defined(__MK20DX128__) || defined(__MK20DX256__)
-  #define ATTITUDE_SENSING_DISABLED
+#define ATTITUDE_SENSING_DISABLED
 #endif
 
 class NazaDecoderLib
 {
-  public:
+public:
     typedef enum { NO_FIX = 0, FIX_2D = 2, FIX_3D = 3, FIX_DGPS = 4 } fixType_t;
 
     NazaDecoderLib();
@@ -59,7 +59,7 @@ class NazaDecoderLib
     int8_t getRoll();
 #endif
 
-  private:
+private:
     int payload[58];
     int seq;
     int cnt;
@@ -95,12 +95,11 @@ class NazaDecoderLib
     void     updateCS(int input);
 
 #ifndef ATTITUDE_SENSING_DISABLED
-    typedef struct
-    {
-      int8_t   edge;
-      uint32_t riseTime;
-      uint32_t fallTime;
-      uint32_t lastGoodWidth;
+    typedef struct {
+        int8_t   edge;
+        uint32_t riseTime;
+        uint32_t fallTime;
+        uint32_t lastGoodWidth;
     } tPwmData;
     tPwmData pwmData[2];
 
